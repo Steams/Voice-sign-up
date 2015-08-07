@@ -1,0 +1,45 @@
+{
+  "name": "voice-signup",
+  "version": "1.0.0",
+  "description": "voice registration app for UWI computing society",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Radcliffe Robinson",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "browserify-shim": "^3.8.10",
+    "gulp": "^3.8.11",
+    "gulp-browserify": "^0.5.1",
+    "gulp-changed": "^1.2.1",
+    "gulp-coffee": "^2.3.1",
+    "gulp-ignore": "^1.2.1",
+    "gulp-inject": "^1.2.0",
+    "gulp-jade": "^1.0.0",
+    "gulp-newer": "^0.5.0",
+    "gulp-react": "^3.0.1",
+    "gulp-server-livereload": "^1.2.1",
+    "gulp-stylus": "^2.0.1",
+    "gulp-watch": "^4.3.4",
+    "reactify": "^1.1.1",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.3.1"
+  },
+  "dependencies": {
+    "angular": "^1.4.3",
+    "angular-route": "^1.4.3",
+    "angular-ui-router": "^0.2.15",
+    "ngreact": "^0.1.7",
+    "react": "^0.13.3"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "./app/lib/annyang.min.js": "annyang"
+  }
+}
