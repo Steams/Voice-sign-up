@@ -1,8 +1,40 @@
 @require "normalize"
+
 //bg-blue = #00BCD4 
 //bg-blue = #03A9F4
-bg-blue = #2196F3
+//bg-blue = #2196F3
+//bg-blue = #fff
+//bg-blue = #EB4336 
+//bg-blue = #315D82
+//bg = #673AB7 
+//bg = #3F51B5 
+//red-bg = #E54047 
+//red-bg = #F44336 
+red-bg =#D6253F 
+bg =#53BAE6 
+bg-blue = #FCFFFF
 fg-default = #212121 
+key-shadow = rgba(66, 66, 66, 0.50) 
+key-bg = #F3F2DD
+//key-accent = #3F51B5
+key-accent = #FFF
+//key-accent = #D461A1
+//key-fg = #D461A1 
+//key-fg = #4FB23F 
+key-fg = #66665E
+//key-fg = #EBEFF2 
+orbit-color = #D461A1
+//orange-gradient =  -webkit-linear-gradient(-45deg,  rgba(241,85,54,1) 0%, rgba(202,28,51,1) 70%);
+//blue-gradient =  -webkit-linear-gradient(-45deg,  rgba(241,85,54,1) 0%, rgba(202,28,51,1) 100%);
+//blue-gradient = -webkit-linear-gradient(-45deg, rgba(112, 191, 245,1) 0%,rgba(39, 160, 243, 1) 100%);
+//my-orange = #FF5722 
+//my-orange = rgba(255, 87, 34, 0.6) 
+//my-orange = #ff5b42 
+my-orange = #EF473A 
+my-burgundy =#CB1D34 
+//my-burgundy = rgba(128, 0, 32, 0.6) 
+my-gradient = -webkit-linear-gradient(-65deg, my-orange 0%, my-orange 40%, my-burgundy 80%)
+
 
 *
     box-sizing border-box
@@ -20,8 +52,28 @@ fg-default = #212121
     width 100%
     display flex
     flex-direction row
-    background-color bg-blue
 
+.base-welcome
+    position relative
+    height 100%
+    width 100%
+    background url('./res/red-noise.png'), my-gradient
+
+.base-sign-up
+    position relative
+    height 100%
+    width 100%
+    background-color bg
+
+//.base:before
+    //position absolute
+    //top 0
+    //left 0
+    //height 100%
+    //width 100%
+    //content ""
+    //background orange-gradient
+    //z-index 0
 
 .base-section
     position relative
@@ -30,8 +82,12 @@ fg-default = #212121
     border 1px solid rgba(255, 255, 255, 0.27) 
 
 
+.base-section.mod-right
+    display none
 .base-section.mod-left
+    display none
     padding-top 60px
+    max-width 400px
 
 .base-fields
     position relative
@@ -69,7 +125,6 @@ fg-default = #212121
 
 .base-section.mod-middle
     flex-grow 3
-    padding-top 100px
 
 .base-prompt
     position relative
@@ -78,14 +133,14 @@ fg-default = #212121
     display flex
     flex-direction column
     margin 0 auto
-    border 1px solid rgba(255, 255, 255, 0.27) 
+    //border 1px solid rgba(255, 255, 255, 0.27) 
 
 .base-prompt-label
     position relative
     height 40%
     width 300px
     margin 0 auto
-    border 1px solid rgba(255, 255, 255, 0.27) 
+    //border 1px solid rgba(255, 255, 255, 0.27) 
 
     p
         position relative
@@ -94,10 +149,11 @@ fg-default = #212121
         margin 0 auto
         text-align center
         padding-bottom 40px
-        border-bottom 1px solid rgba(255, 255, 255, 0.27) 
+        //border-bottom 1px solid rgba(255, 255, 255, 0.27) 
         font-size 50px
         font-family Raleway
         color #263238 
+
 
 
 .base-prompt-input
@@ -119,7 +175,7 @@ fg-default = #212121
     height 350px
     width 900px
     margin 0 auto
-    border 1px solid rgba(255, 255, 255, 0.27) 
+    //border 1px solid rgba(255, 255, 255, 0.27) 
 
 .base-keyboard-row
     display flex
@@ -128,37 +184,86 @@ fg-default = #212121
     justify-content center
     flex-wrap wrap
 
-.pressed
-    border 1px solid red
-    background-color #D7CCC8 
-
 .key
     position relative
     height 70px
     width 70px
-    background-color #FFFFFF 
+    background-color key-bg
     border-radius 90px
     margin-left 5px
     margin-right 5px
-    box-shadow 1px 3px 5px 1px rgba(66, 66, 66, 0.50) 
+    box-shadow 1px 3px 5px 1px key-shadow
+    transform translate(-1px,-1px)
 
     &:hover
-        box-shadow 1px 1px 0px 1px rgba(66, 66, 66, 0.50) 
-        background-color #F5F5F5 
+        box-shadow 1px 1px 0px 0px key-shadow
+        transform translate(0px,0px)
 
     p
+        position relative
         height 10px
         width 10px
         margin 0
         padding 0
-        top 30%
-        left 60%
+        top 50%
+        left 50%
+        line-height 10px
         transform translate(-50%,-50%)
-        position relative
         font-family Raleway
         font-size 30px
         font-weight 500
-        color #66665E 
+        color key-fg
+        text-shadow 2px 2px 3px rgba(66, 66, 66, 0.20)
+
+
+@-webkit-keyframes key-pulse{
+
+    0% {
+        opacity 0
+        height 0px
+        width 0px
+    }
+
+    20% {
+        opacity 0.7
+        height 50%
+        width 50%
+    }
+
+    100% {
+        opacity 0.3
+        height 120%
+        width 120%
+    }
+
+}
+
+.key:after
+    position absolute
+    content ""
+    opacity 0
+    top 50%
+    left 50%
+    height 1px
+    width 1px
+    transform translate(-50%,-50%)
+    border-radius 90px
+    background-color key-accent
+
+
+
+.pressed
+    box-shadow 1px 1px 0px 0px key-shadow
+    transform translate(0px,0px)
+
+    p
+        -webkit-filter brightness(1.5)
+
+.pressed:after
+    animation key-pulse 0.3s 
+    animation-iteration-count 1
+    animation-timing-function linear
+
 
 .key.mod-space
     width 500px
@@ -187,7 +292,6 @@ fg-default = #212121
     border-radius 20px
     background-color #F44336 
 
-
 @-webkit-keyframes pulse
     from { 
         transform scale(1,1)
@@ -210,9 +314,7 @@ fg-default = #212121
     border-radius 40px
     animation pulse 0.7s linear infinite
 
-
-
-@-webkit-keyframes orbit2 {
+@-webkit-keyframes orbit {
     from {
         -webkit-transform: rotate(0deg) translateX(30px) rotate(0deg)
     }
@@ -229,8 +331,8 @@ fg-default = #212121
     width 10px
     border-radius 30px
     transform rotate(45deg) translateX(30px)
-    animation orbit2 2s linear infinite
-    background-color green
+    animation orbit 2s linear infinite
+    background-color orbit-color
 
 .base-caption
     position relative
@@ -242,4 +344,4 @@ fg-default = #212121
         width 100%
         text-align center
         font-size 25px
-        font-weight 500
+        color  #424242

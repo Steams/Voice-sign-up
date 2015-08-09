@@ -8,6 +8,8 @@
 
   require('./module_sign-up');
 
+  require('./module_welcome');
+
   require('./testComp');
 
   require('./testCtrl');

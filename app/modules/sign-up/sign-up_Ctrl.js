@@ -3,8 +3,7 @@
 
   angular.module("voice-signup").controller('sign-up_Ctrl', [
     '$scope', 'Fields_factory', function($scope, fields_fact) {
-      var commands, x;
-      $scope.thing = "checking";
+      var commands;
       $scope.word = "";
       $scope.keyboard = {
         rows: [
@@ -155,7 +154,6 @@
           }
         ]
       };
-      $scope.label = "start";
       $scope.unPress = function(key) {
         var i, j, k, ref, results, row, x;
         results = [];
@@ -179,20 +177,6 @@
         }
         return results;
       };
-      $scope.space = function() {
-        $scope.$apply();
-        $scope.word += " ";
-        return setTimeout(function() {
-          return $scope.unPress(" ");
-        }, 200);
-      };
-      $scope.backspace = function() {
-        $scope.$apply();
-        $scope.word = $scope.word.slice(0, -1);
-        return setTimeout(function() {
-          return $scope.unPress("<--");
-        }, 200);
-      };
       $scope.press = function(key) {
         var i, j, k, m, ref, ref1, row, x;
         for (x = j = 0, ref = $scope.keyboard.rows.length; j < ref; x = j += 1) {
@@ -214,11 +198,42 @@
               $scope.word += key;
               setTimeout(function() {
                 return $scope.unPress(key);
-              }, 200);
+              }, 250);
               $scope.$apply();
             }
           }
         }
+      };
+      $scope.undo = function() {
+        var l, typeSpeed, x;
+        console.log("ndoing");
+        x = 0;
+        l = $scope.word.length;
+        return typeSpeed = setInterval(function() {
+          console.log("interval");
+          if (x < l) {
+            $scope.press("<--");
+          } else {
+            clearInterval(typeSpeed);
+            $scope.unPress("<--");
+          }
+          x++;
+          return $scope.$apply();
+        }, 150);
+      };
+      $scope.space = function() {
+        $scope.$apply();
+        $scope.word += " ";
+        return setTimeout(function() {
+          return $scope.unPress(" ");
+        }, 200);
+      };
+      $scope.backspace = function() {
+        $scope.$apply();
+        $scope.word = $scope.word.slice(0, -1);
+        return setTimeout(function() {
+          return $scope.unPress("<--");
+        }, 200);
       };
       $scope.type = function(word) {
         var l, typeSpeed, x;
@@ -247,30 +262,11 @@
         $scope.label = field.name;
         return 0;
       };
-      $scope.init();
-      x = 0;
       $scope.start = function() {
         console.log("starting");
         $scope.label = fields_fact.active().name;
         fields_fact.getNext();
         return console.log(fields_fact.getIndex());
-      };
-      $scope.undo = function() {
-        var l, typeSpeed;
-        console.log("ndoing");
-        x = 0;
-        l = $scope.word.length;
-        return typeSpeed = setInterval(function() {
-          console.log("interval");
-          if (x < l) {
-            $scope.press("<--");
-          } else {
-            clearInterval(typeSpeed);
-            $scope.unPress("<--");
-          }
-          x++;
-          return $scope.$apply();
-        }, 150);
       };
       commands = {
         'next': function() {
@@ -310,8 +306,9 @@
         charStr = String.fromCharCode(charCode);
         return $scope.press(charStr);
       };
-      annyang.addCommands(commands);
-      return annyang.start();
+      return setTimeout(function() {
+        return $scope.type("Radcliffe");
+      }, 1000);
     }
   ]);
 

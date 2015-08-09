@@ -10,6 +10,7 @@ app = angular.module('voice-signup',
 #require('../lib/annyang.min.js')
 require('./module_app-globals')
 require('./module_sign-up')
+require('./module_welcome')
 require('./testComp')
 require('./testCtrl')
 

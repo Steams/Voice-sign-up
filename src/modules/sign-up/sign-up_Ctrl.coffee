@@ -3,7 +3,6 @@ require('../../lib/annyang.min.js')
 
 angular.module "voice-signup"
     .controller 'sign-up_Ctrl',['$scope','Fields_factory',($scope,fields_fact)->
-        $scope.thing ="checking"
         $scope.word = ""
         $scope.keyboard = {
             rows : [
@@ -62,7 +61,6 @@ angular.module "voice-signup"
             
         }
 
-        $scope.label = "start"
 
         $scope.unPress = (key)->
             for x in [0...$scope.keyboard.rows.length] by 1
@@ -73,22 +71,6 @@ angular.module "voice-signup"
                         console.log $scope.keyboard.rows[x].rowKeys[i].keyValue
                         $scope.keyboard.rows[x].rowKeys[i].keyMod = ""
                         $scope.$apply()
-
-        $scope.space = ()->
-            $scope.$apply()
-            $scope.word += " "
-            setTimeout(()->
-                $scope.unPress(" ")
-            ,200
-            )
-
-        $scope.backspace = ()->
-                $scope.$apply()
-                $scope.word = $scope.word.slice(0,-1)
-                setTimeout(()->
-                    $scope.unPress("<--")
-                ,200
-                )
 
         $scope.press = (key)->
             for x in [0...$scope.keyboard.rows.length] by 1
@@ -108,42 +90,9 @@ angular.module "voice-signup"
                         $scope.word += key
                         setTimeout(()->
                             $scope.unPress(key)
-                        ,200
+                        ,250
                         )
                         $scope.$apply()
-
-        $scope.type = (word)->
-            console.log "typing "+word
-            x =0
-            l = word.length
-            typeSpeed = setInterval(()->
-                if(x < l)
-                    c = word.charAt(x)
-                    console.log "typing "+c
-                    $scope.press(c)
-                    x++
-                else
-                    clearInterval(typeSpeed)
-            ,100
-            )
-
-        $scope.fields = ()-> return fields_fact.fields
-        $scope.init = ()->
-            $scope.current_field = fields_fact.active()
-            # should trigger the layout to play into animations
-            
-        $scope.process = (field)->
-            $scope.label = field.name
-            return 0
-            #animate in
-
-        $scope.init()
-        x = 0
-        $scope.start = ()->
-            console.log "starting"
-            $scope.label = fields_fact.active().name
-            fields_fact.getNext()
-            console.log fields_fact.getIndex()
 
         $scope.undo = ()->
             console.log "ndoing"
@@ -161,6 +110,53 @@ angular.module "voice-signup"
             ,150
             )
 
+        $scope.space = ()->
+            $scope.$apply()
+            $scope.word += " "
+            setTimeout(()->
+                $scope.unPress(" ")
+            ,200
+            )
+
+        $scope.backspace = ()->
+                $scope.$apply()
+                $scope.word = $scope.word.slice(0,-1)
+                setTimeout(()->
+                    $scope.unPress("<--")
+                ,200
+                )
+
+        $scope.type = (word)->
+            console.log "typing "+word
+            x =0
+            l = word.length
+            typeSpeed = setInterval(()->
+                if(x < l)
+                    c = word.charAt(x)
+                    console.log "typing "+c
+                    $scope.press(c)
+                    x++
+                else
+                    clearInterval(typeSpeed)
+            ,100
+            )
+
+        $scope.fields = ()-> return fields_fact.fields
+
+        $scope.init = ()->
+            $scope.current_field = fields_fact.active()
+            # should trigger the layout to play into animations
+            
+        $scope.process = (field)->
+            $scope.label = field.name
+            return 0
+
+        $scope.start = ()->
+            console.log "starting"
+            $scope.label = fields_fact.active().name
+            fields_fact.getNext()
+            console.log fields_fact.getIndex()
+
         commands = {
             'next' : ()->
                 console.log "called"
@@ -177,13 +173,7 @@ angular.module "voice-signup"
             'undo': ()->
                 $scope.undo()
                 $scope.$apply()
-
         }
-
-        #setTimeout(()->
-            #$scope.type("Radcliffe")
-        #,1000
-        #)
 
         document.getElementById("prompt-input").onkeydown = (evt)->
             evt = evt || window.event
@@ -194,7 +184,6 @@ angular.module "voice-signup"
                 $scope.press("<--")
                 )
 
-
         document.onkeypress = (evt)->
             evt.preventDefault()
             evt = evt || window.event
@@ -203,7 +192,11 @@ angular.module "voice-signup"
             charStr = String.fromCharCode(charCode)
             $scope.press(charStr)
         
-        annyang.addCommands(commands)
-        annyang.start()
+        setTimeout(()->
+            $scope.type("Radcliffe")
+        ,1000
+        )
+        #annyang.addCommands(commands)
+        #annyang.start()
 
 ]

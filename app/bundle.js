@@ -51,17 +51,35 @@
 
 },{}],3:[function(require,module,exports){
 (function() {
+  angular.module("voice-signup").controller('global_Ctrl', ['$scope', '$state', function($scope, $state) {}]);
+
+}).call(this);
+
+},{}],4:[function(require,module,exports){
+(function() {
   angular.module('voice-signup').config(function($stateProvider) {
     return $stateProvider.state('base', {
       url: '',
       templateUrl: '/app/modules/app-globals/partials/base.html',
+      controller: "global_Ctrl"
+    }).state('base.welcome', {
+      url: '/welcome',
+      templateUrl: '/app/modules/welcome/welcome.html',
+      controller: "welcome_Ctrl"
+    }).state('base.sign-up', {
+      url: '/sign-up',
+      templateUrl: '/app/modules/sign-up/partials/sign-up.html',
       controller: "sign-up_Ctrl"
+    }).state('base.thanks', {
+      url: '/thanks',
+      templateUrl: '/app/modules/thansk/partials/thanks.html',
+      controller: "thanks_Ctrl"
     });
   });
 
 }).call(this);
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 (function() {
   'use strict';
   var app;
@@ -72,91 +90,43 @@
 
   require('./module_sign-up');
 
+  require('./module_welcome');
+
   require('./testComp');
 
   require('./testCtrl');
 
 }).call(this);
 
-},{"./module_app-globals":5,"./module_sign-up":6,"./testComp":9,"./testCtrl":10}],5:[function(require,module,exports){
+},{"./module_app-globals":6,"./module_sign-up":7,"./module_welcome":8,"./testComp":10,"./testCtrl":11}],6:[function(require,module,exports){
 (function() {
   require('./app-globals/router');
+
+  require('./app-globals/global_Ctrl');
 
   require('./app-globals/factories/fields_factory');
 
 }).call(this);
 
-},{"./app-globals/factories/fields_factory":2,"./app-globals/router":3}],6:[function(require,module,exports){
+},{"./app-globals/factories/fields_factory":2,"./app-globals/global_Ctrl":3,"./app-globals/router":4}],7:[function(require,module,exports){
 (function() {
   require("./sign-up/sign-up_Ctrl");
 
-  require("./sign-up/components/form_component");
+}).call(this);
+
+},{"./sign-up/sign-up_Ctrl":9}],8:[function(require,module,exports){
+(function() {
+  require("./welcome/welcome_Ctrl");
 
 }).call(this);
 
-},{"./sign-up/components/form_component":7,"./sign-up/sign-up_Ctrl":8}],7:[function(require,module,exports){
-//var formInput = require('./formInput_comp');
-//var formLabel = require('./formLabel_comp');
-var formLabel = React.createClass({displayName: "formLabel",
-
-    render: function() {
-        return  (
-            React.createElement("div", {className: "formlabel"}, 
-                React.createElement("p", null, "Hl"), 
-                React.createElement("p", null, "field is ", this.props.name)
-            )
-        );
-    }
-
-});
-
-var formInput = React.createClass({displayName: "formInput",
-
-    getInitialState: function() {
-        return {value: ''};
-    },
-
-    handleChange: function(event){
-        this.setState({value: event.target.value});
-    },
-
-    render: function() {
-        return (
-            React.createElement("div", {className: "formInput"}, 
-                React.createElement("input", {type: "text", name: "input", value: value, onChange: this.handleChange})
-            )
-        );
-    }
-});
-
-var formComp = React.createClass({displayName: "formComp",
-
-    getInitialState: function() {   
-        return {value: ''};
-    },
-
-    render: function(){
-        return (
-            React.createElement("div", {className: "form"}, 
-                React.createElement("formLabel", {name: this.props.field.name}), 
-                React.createElement("formInput", null)
-            )
-        );
-    }
-});
-
-angular.module("voice-signup").directive('formComp',['reactDirective',function(reactDirective){
-    return reactDirective(formComp,['field']);
-}]);
-
-},{}],8:[function(require,module,exports){
+},{"./welcome/welcome_Ctrl":12}],9:[function(require,module,exports){
 (function() {
   require('../../lib/annyang.min.js');
 
   angular.module("voice-signup").controller('sign-up_Ctrl', [
     '$scope', 'Fields_factory', function($scope, fields_fact) {
-      var commands, x;
-      $scope.thing = "checking";
+      var commands;
       $scope.word = "";
       $scope.keyboard = {
         rows: [
@@ -307,7 +277,6 @@ angular.module("voice-signup").directive('formComp',['reactDirective',function(r
           }
         ]
       };
-      $scope.label = "start";
       $scope.unPress = function(key) {
         var i, j, k, ref, results, row, x;
         results = [];
@@ -331,20 +300,6 @@ angular.module("voice-signup").directive('formComp',['reactDirective',function(r
         }
         return results;
       };
-      $scope.space = function() {
-        $scope.$apply();
-        $scope.word += " ";
-        return setTimeout(function() {
-          return $scope.unPress(" ");
-        }, 200);
-      };
-      $scope.backspace = function() {
-        $scope.$apply();
-        $scope.word = $scope.word.slice(0, -1);
-        return setTimeout(function() {
-          return $scope.unPress("<--");
-        }, 200);
-      };
       $scope.press = function(key) {
         var i, j, k, m, ref, ref1, row, x;
         for (x = j = 0, ref = $scope.keyboard.rows.length; j < ref; x = j += 1) {
@@ -366,11 +321,42 @@ angular.module("voice-signup").directive('formComp',['reactDirective',function(r
               $scope.word += key;
               setTimeout(function() {
                 return $scope.unPress(key);
-              }, 200);
+              }, 250);
               $scope.$apply();
             }
           }
         }
+      };
+      $scope.undo = function() {
+        var l, typeSpeed, x;
+        console.log("ndoing");
+        x = 0;
+        l = $scope.word.length;
+        return typeSpeed = setInterval(function() {
+          console.log("interval");
+          if (x < l) {
+            $scope.press("<--");
+          } else {
+            clearInterval(typeSpeed);
+            $scope.unPress("<--");
+          }
+          x++;
+          return $scope.$apply();
+        }, 150);
+      };
+      $scope.space = function() {
+        $scope.$apply();
+        $scope.word += " ";
+        return setTimeout(function() {
+          return $scope.unPress(" ");
+        }, 200);
+      };
+      $scope.backspace = function() {
+        $scope.$apply();
+        $scope.word = $scope.word.slice(0, -1);
+        return setTimeout(function() {
+          return $scope.unPress("<--");
+        }, 200);
       };
       $scope.type = function(word) {
         var l, typeSpeed, x;
@@ -399,30 +385,11 @@ angular.module("voice-signup").directive('formComp',['reactDirective',function(r
         $scope.label = field.name;
         return 0;
       };
-      $scope.init();
-      x = 0;
       $scope.start = function() {
         console.log("starting");
         $scope.label = fields_fact.active().name;
         fields_fact.getNext();
         return console.log(fields_fact.getIndex());
-      };
-      $scope.undo = function() {
-        var l, typeSpeed;
-        console.log("ndoing");
-        x = 0;
-        l = $scope.word.length;
-        return typeSpeed = setInterval(function() {
-          console.log("interval");
-          if (x < l) {
-            $scope.press("<--");
-          } else {
-            clearInterval(typeSpeed);
-            $scope.unPress("<--");
-          }
-          x++;
-          return $scope.$apply();
-        }, 150);
       };
       commands = {
         'next': function() {
@@ -462,14 +429,15 @@ angular.module("voice-signup").directive('formComp',['reactDirective',function(r
         charStr = String.fromCharCode(charCode);
         return $scope.press(charStr);
       };
-      annyang.addCommands(commands);
-      return annyang.start();
+      return setTimeout(function() {
+        return $scope.type("Radcliffe");
+      }, 1000);
     }
   ]);
 
 }).call(this);
 
-},{"../../lib/annyang.min.js":1}],9:[function(require,module,exports){
+},{"../../lib/annyang.min.js":1}],10:[function(require,module,exports){
 var newComp = React.createClass({displayName: "newComp",
     render : function(){
         return React.createElement("h2", null, "Hi from nested comp")
@@ -494,7 +462,7 @@ angular.module("voice-signup").directive('testComp',['reactDirective',function(r
     return reactDirective(testComp,['name']);
 }]);
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function() {
   angular.module("voice-signup").controller("testCtrl", [
     '$scope', function($scope) {
@@ -510,4 +478,10 @@ angular.module("voice-signup").directive('testComp',['reactDirective',function(r
 
 }).call(this);
 
-},{}]},{},[4]);
+},{}],12:[function(require,module,exports){
+(function() {
+  angular.module('voice-signup').controller('welcome_Ctrl', ['$scope', function($scope) {}]);
+
+}).call(this);
+
+},{}]},{},[5]);

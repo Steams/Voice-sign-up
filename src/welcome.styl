@@ -1,0 +1,104 @@
+//bg-blue = #00BCD5 
+bg-blue = #03A9F4
+//red-bg = #E54047 
+red-bg =#D6253F 
+my-gold =#FFAE93 
+dark-gold = #FC7468 
+//blue-gradient = -webkit-linear-gradient(-45deg,  #45A8D1 0%, #1B6BFA  100%);
+
+my-orange = #EF473A 
+my-burgundy =#CB1D34 
+my-burgundy-2 =rgba(190, 20, 50, 1) 
+my-gradient = -webkit-linear-gradient(-80deg, my-orange 0%, my-orange 40%, my-burgundy-2 120%)
+
+.welcome
+    position relative
+
+.welcome-header
+    position relative
+    font-size 200px
+    letter-spacing -13px
+    color transparent
+    margin 0 auto
+    text-align center
+    font-family Lato
+    font-weight 900
+    z-index 1
+
+.welcome-header:before
+    opacity 0.9
+    z-index 0
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    content "WELCOME"
+    text-shadow 20px 20px 45px rgba(10,10,10,0.2),1px 1px 2px rgba(239, 71, 58, 1), 10px 10px 20px rgba(20,20,20, 0.15), -1px -1px 1px rgba(255,255,255,0.15)
+
+.welcome-header:after
+    z-index 2
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    content "WELCOME"
+    background url('./res/red-noise.png'), my-gradient
+    -webkit-text-fill-color transparent
+    -webkit-background-clip text
+
+
+.welcome-name
+    position relative
+    bottom 0
+    left 50%
+    transform translate(-50%,0)
+    width 700px
+
+.welcome-name-text
+    margin-top 5px
+    position relative
+    font-size 30px
+    font-family Raleway
+    color transparent
+    letter-spacing 15px
+    font-weight bolder
+    text-align center
+
+.welcome-name-text:after
+    z-index 3
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    content "{ COMPUTING SOCIETY }"
+    //background  #FC7468 
+    background -webkit-linear-gradient(0deg, dark-gold 0%, my-gold 40%, my-gold 50%, dark-gold 100%);
+    -webkit-text-fill-color transparent
+    -webkit-background-clip text
+
+
+.welcome-name-to
+    position relative
+    font-size 30px
+    font-family Raleway
+    color transparent
+    letter-spacing 15px
+    font-weight bolder
+    text-align center
+
+.welcome-name-to:after
+    z-index 3
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    content "~ TO ~"
+    //background  #FC7468 
+    background rgba(30,30,30,0.4)
+    //background -webkit-linear-gradient(0deg, dark-gold 0%, my-gold 40%, my-gold 50%, dark-gold 100%);
+    -webkit-text-fill-color transparent
+    -webkit-background-clip text

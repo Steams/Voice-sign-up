@@ -25,21 +25,5 @@
                 .base-fields-item-input
                     input(name="field" value="hey")
     .base-section.mod-middle
-        .base-prompt
-            .base-prompt-label
-                p First Name
-            .base-prompt-input
-                input(name="field" ng-model="word" id="prompt-input")
-        .base-keyboard
-            .base-keyboard-row(ng-repeat="row in keyboard.rows")
-                .key(ng-repeat="key in row.rowKeys" class="{{key.keyClass}} {{key.keyMod}}" ng-click="press(key.keyValue)")
-                    p {{key.keyValue}}
-
-
-        .base-monitor
-            .base-monitor-ring
-                .base-monitor-ring-center
-                .base-monitor-ring-orbit
-        .base-caption
-            p Listening...
+        <div class="base" ui-view></div>
     .base-section.mod-right
