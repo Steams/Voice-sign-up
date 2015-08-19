@@ -7,15 +7,17 @@ angular.module "voice-signup"
         {name:"Email address"},
         {name:"Interests"},
         {name:"Skills"},
+        {name:"Confirm"},
     ]
     current_index = 0
-    factory.active = () -> return this.fields[current_index]
-    factory.getIndex = ()->
-        return current_index
 
     factory.getNext = ()->
         current_index += 1
-        return this.active()
+        return this.fields[current_index - 1]
+
+    factory.refresh = ()->
+        current_index = 0
+        
 
     return factory
 ]

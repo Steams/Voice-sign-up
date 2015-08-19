@@ -1,0 +1,29 @@
+.base.mod-sign-up
+    .sign-up-fields-holder
+        .sign-up-fields(id="js-sign-up-fields")
+            .sign-up-fields-item( ng-repeat="field in previous" class="animation")
+                .base-fields-item-label
+                    label(for="field") {{field.name}}
+                .base-fields-item-input
+                    input(class="js-fields-item-input" name="field" value="{{field.value}}" ) 
+    .sign-up-body-holder
+        .sign-up-prompter-holder
+            .prompter
+                .prompter-label
+                    p {{field.name}}
+                .prompter-input
+                    input(name="field" ng-model="word" id="prompt-input" ng-hide="done")
+
+        .sign-up-keyboard-holder
+            .keyboard
+                .keyboard-row(ng-repeat="row in keyboard.rows" )
+                    .key(ng-repeat="key in row.rowKeys" class="{{key.keyClass}} {{key.keyMod}}" ng-click="press(key.keyValue,true)")
+                        p {{key.keyValue}}
+
+        .sign-up-monitor-holder
+            .monitor.mod-sign-up.js-monitor.isTransitioning
+                .monitor-ring
+                    .monitor-ring-center
+                    .monitor-ring-orbit
+                .monitor-caption
+                    p Listening...

@@ -1,46 +1,69 @@
 //bg-blue = #00BCD5 
-bg-blue = #03A9F4
+bg-blue =#53BAE6 
+//red-bg =#D6253F 
+//blue-gradient = -webkit-linear-gradient(-45deg,  #45A8D1 0%, #1B6BFA  100%);
+//bg-blue = #03A9F4
 //red-bg = #E54047 
-red-bg =#D6253F 
 my-gold =#FFAE93 
 dark-gold = #FC7468 
-//blue-gradient = -webkit-linear-gradient(-45deg,  #45A8D1 0%, #1B6BFA  100%);
-
+my-white = rgb(255,255,200)
 my-orange = #EF473A 
-my-burgundy =#CB1D34 
-my-burgundy-2 =rgba(190, 20, 50, 1) 
-my-gradient = -webkit-linear-gradient(-80deg, my-orange 0%, my-orange 40%, my-burgundy-2 120%)
+//my-burgundy =#CB1D34 
+my-burgundy =rgba(190, 20, 50, 1) 
+my-gradient = -webkit-linear-gradient(-80deg, my-orange 0%, my-orange 40%, my-burgundy 110%)
+//my-gradient =-webkit-linear-gradient(-65deg, #B8352B 0%, #CB382C 40%, #A1182A 80%) 
 
-.welcome
-    position relative
+@-webkit-keyframes pulse
+    from { 
+        transform translate(-50%,-50%) scale(1,1)
+        opacity 1
+    }
+    to   { 
+        transform translate(-50%,-50%) scale(4.25,4.25)
+        opacity 0
+    }
 
-.welcome-header
+
+dark-fg = rgba(30,30,30,0.4) 
+
+
+.base.mod-welcome
+    display flex
+    overflow hidden
+    flex-direction column
+
+.welcome-hero
     position relative
-    font-size 200px
-    letter-spacing -13px
-    color transparent
+    width 100%
+    height 320px
+
+.welcome-hero-header
+    opacity 1
+    position relative
+    z-index 2
     margin 0 auto
+    color transparent
+    font-size 200px
     text-align center
-    font-family Lato
+    font-family -webkit-body
     font-weight 900
-    z-index 1
+    letter-spacing -15px
 
-.welcome-header:before
-    opacity 0.9
-    z-index 0
+.welcome-hero-header:before
     position absolute
     top 0
     left 0
+    z-index 0
     height 100%
     width 100%
     content "WELCOME"
-    text-shadow 20px 20px 45px rgba(10,10,10,0.2),1px 1px 2px rgba(239, 71, 58, 1), 10px 10px 20px rgba(20,20,20, 0.15), -1px -1px 1px rgba(255,255,255,0.15)
+    text-shadow 20px 20px 50px rgba(20,20,20,0.2),1px 1px 2px rgba(239, 71, 58, 1), 5px 5px 20px rgba(20,20,20, 0.2), -1px -1px 0px rgba(255,255,255,0.1)
 
-.welcome-header:after
-    z-index 2
+.welcome-hero-header:after
     position absolute
     top 0
     left 0
+    z-index 1
     height 100%
     width 100%
     content "WELCOME"
@@ -48,15 +71,21 @@ my-gradient = -webkit-linear-gradient(-80deg, my-orange 0%, my-orange 40%, my-bu
     -webkit-text-fill-color transparent
     -webkit-background-clip text
 
+.welcome-monitor-holder
+    position relative
+    height 120px
+    display flex
+    flex-direction column
+    z-index 3
 
-.welcome-name
+.welcome-hero-body
     position relative
     bottom 0
     left 50%
     transform translate(-50%,0)
     width 700px
-
-.welcome-name-text
+ 
+.welcome-hero-body-title
     margin-top 5px
     position relative
     font-size 30px
@@ -66,7 +95,7 @@ my-gradient = -webkit-linear-gradient(-80deg, my-orange 0%, my-orange 40%, my-bu
     font-weight bolder
     text-align center
 
-.welcome-name-text:after
+.welcome-hero-body-title:after
     z-index 3
     position absolute
     top 0
@@ -74,13 +103,11 @@ my-gradient = -webkit-linear-gradient(-80deg, my-orange 0%, my-orange 40%, my-bu
     height 100%
     width 100%
     content "{ COMPUTING SOCIETY }"
-    //background  #FC7468 
-    background -webkit-linear-gradient(0deg, dark-gold 0%, my-gold 40%, my-gold 50%, dark-gold 100%);
+    background -webkit-linear-gradient(0deg, dark-gold 10%, my-gold 40%, my-gold 50%, dark-gold 90%);
     -webkit-text-fill-color transparent
     -webkit-background-clip text
 
-
-.welcome-name-to
+.welcome-hero-body-pre
     position relative
     font-size 30px
     font-family Raleway
@@ -89,7 +116,7 @@ my-gradient = -webkit-linear-gradient(-80deg, my-orange 0%, my-orange 40%, my-bu
     font-weight bolder
     text-align center
 
-.welcome-name-to:after
+.welcome-hero-body-pre:after
     z-index 3
     position absolute
     top 0
@@ -97,8 +124,246 @@ my-gradient = -webkit-linear-gradient(-80deg, my-orange 0%, my-orange 40%, my-bu
     height 100%
     width 100%
     content "~ TO ~"
-    //background  #FC7468 
     background rgba(30,30,30,0.4)
-    //background -webkit-linear-gradient(0deg, dark-gold 0%, my-gold 40%, my-gold 50%, dark-gold 100%);
     -webkit-text-fill-color transparent
     -webkit-background-clip text
+
+.base-caption
+    p
+        color dark-fg !important
+        font-weight bold
+
+.welcome-body
+    position relative
+    width 100%
+    flex-grow 1
+
+.welcome-body-prompt
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%,-50%)
+    height 100%
+    width 95%
+    background-color my-white
+    background-clip padding-box
+    border 7px solid transparent
+    border-image -webkit-linear-gradient(-45deg,rgba(248,192,143,0.8) 0%, rgba(219,140,71,10.7) 34%, rgba(248, 201, 147, 1)  56%,rgba(219,140,71,0.9)  100%) 
+    border-image-slice 1
+    border-bottom 0px
+    overflow hidden
+    //#F8C993
+
+.welcome-body-prompt-words
+    position relative
+    top 50%
+    left 50%
+    transform translate(-50%,-50%)
+    z-index 2
+    text-align center
+    font-family Bevan
+    font-size 60px
+    font-weight 900
+    color transparent
+    background url('./res/red-noise.png'), -webkit-linear-gradient( -40deg, #CB2E23 0%, #860507 70% )
+    //rgba(176, 39, 29, 1)
+    //#B0271D
+    //#5A0506
+
+    -webkit-background-clip text
+
+
+.welcome-body-prompt-words:after,.welcome-body-prompt-words:before
+    position absolute
+    content ' " Sign me up " '
+    top 0
+    left 0
+    height 100%
+    width 100%
+
+.welcome-body-prompt-words:after
+    top 4px
+    left 4px
+    color rgba(200,200,200,0.05)
+
+.welcome-body-prompt-words:before
+    top 5px
+    left 5px
+    color rgba(255,255,255,0.02)
+
+.welcome-body-prompt-decoration
+    opacity 1
+    position absolute
+    top 0
+    left 0
+    z-index 0
+    height 100%
+    overflow-y hidden
+    color rgba(255,255,200,1) 
+    text-shadow 1px 1px 1px rgba(0,0,0,0.3)
+    font-family monospace
+    font-weight bold
+    letter-spacing 1px
+
+.welcome-body-recent
+    position absolute
+    left 50px
+    bottom 0
+    height 130%
+    width 350px
+    background-color my-white
+    color dark-fg
+    box-shadow 7px 10px 20px rgba(20,20,20,0.15), 20px 20px 40px rgba(20,20,20,0.2)
+    border 7px solid transparent
+    border-image -webkit-linear-gradient(-45deg, rgba(238, 182, 123, 0.8)  0%, rgba(199, 130, 61, 0.7)  34%, rgba(248, 201, 147, 1)  56%,rgba(152, 82, 30, .8)  100%) 
+    border-image-slice 1
+    border-bottom 0px
+    z-index 0
+
+
+
+.welcome-body-recent-header
+    position absolute
+    top -45px
+    left 50%
+    transform translate(-50%,0) translate(5px,0)
+    width 400px
+    height 40px
+    text-align center
+    padding 0px
+    margin 0 auto
+    background -webkit-linear-gradient(-45deg, #000034 0%,#162B86 60%,  #061B6D 100% )
+    z-index 1
+.welcome-body-recent-header:before
+    position absolute
+    bottom -37px
+    right -30px
+    content ""
+    height 0px
+    width 0px
+    border 30px solid transparent
+    border-left 30px solid #162B86
+    -webkit-filter brightness(0.7)
+    z-index -1
+    
+.welcome-body-recent-header:after
+    position absolute
+    content "~ " attr(data-title) " ~"
+    top 0
+    left 0
+    height 100%
+    width 100%
+    text-align center
+    padding 0px
+    margin 0 auto
+    background -webkit-linear-gradient(-45deg, #000034 0%,#162B86 60%,  #061B6D 100% )
+    border 5px solid
+    border-image -webkit-linear-gradient(-45deg, rgba(238, 182, 123, 0.8)  0%, rgba(199, 130, 61, 0.7)  34%, rgba(248, 201, 147, 1)  56%,rgba(152, 82, 30, .8)  100%) 
+    border-image-slice 1
+    border-left 0px
+    border-right 0px
+    text-align center
+    line-height 40px
+    color rgba(248, 201, 147, 1)
+    font-weight bold
+    z-index 2
+
+.welcome-body-slideshow
+    height 100%
+    width 100%
+    z-index 1
+
+.welcome-body-image-holder
+    position absolute
+    display flex
+    overflow hidden
+    flex-wrap nowrap
+    height 100%
+    width 100%
+    padding 0
+    margin 0
+    list-style none
+
+.welcome-body-image.current
+    position absolute
+    top 0px
+    left 0px
+    height 100%
+    width 100%
+    will-change transform
+
+.welcome-body-image.next
+    position absolute
+    top 0px
+    left 100%
+    height 100%
+    width 100%
+    will-change transform
+
+.welcome-body-recent-ribbon
+    opacity 1
+    position absolute
+    bottom 140px
+    left -280px
+    content "#1"
+    height 30px
+    width 700px
+    transform translateZ(0px) rotate(-45deg)
+    background -webkit-linear-gradient(-45deg, #000034 0%,#162B86 60%,  #061B6D 100% )
+
+.welcome-body-recent-ribbon:before
+    display none
+    position absolute
+    content ""
+    top 17px
+    left -10px
+    height 0px
+    width 0px
+    background-color transparent
+    border 15px solid transparent
+    border-right 15px solid #000034
+    transform translateZ(0px) rotate(-35deg)
+    z-index -1
+
+.welcome-body-recent-ribbon:after
+    position absolute
+    content ""
+    top 0
+    left 0
+    height 100%
+    width 100%
+    background -webkit-linear-gradient(-45deg, #000034 0%,#162B86 60%,  #061B6D 100% )
+    border 5px solid
+    border-image -webkit-linear-gradient(-45deg, rgba(238, 182, 123, 0.8)  0%, rgba(238, 182, 123, 0.8) 34%, rgba(248, 201, 147, 1)  56%,rgba(152, 82, 30, .8)  100%) 
+    border-image-slice 1
+    border-left 0px
+    border-right 0px
+
+
+.isSliding
+    transition-property transform,left,right
+    transition-duration 0.3s
+    transition-timing cubic-bezier(0.19, 1, 0.22, 1)
+
+.welcome-body-image.current.isSliding
+    left -100%
+    // transform translate(-100%,0)
+.welcome-body-image.next.isSliding
+    left 0%
+    // transform translate(-100%,0)
+
+img
+    outline none !important
+    border none !important
+
+.monitor.mod-welcome
+    .monitor-ring:after
+        background-color bg-blue
+    .monitor-ring-center
+        background-color bg-blue
+
+.monitor.mod-welcome.isTransitioning
+    .monitor-ring-center
+        z-index 5
+        -webkit-clip-path: circle(1000px at 50% 50%);
+

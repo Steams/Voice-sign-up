@@ -2,7 +2,7 @@
   'use strict';
   var app;
 
-  app = angular.module('voice-signup', ['ngRoute', 'ui.router', 'react']);
+  app = angular.module('voice-signup', ['ngRoute', 'ui.router', 'ngAnimate']);
 
   require('./module_app-globals');
 
@@ -10,8 +10,6 @@
 
   require('./module_welcome');
 
-  require('./testComp');
-
-  require('./testCtrl');
+  require('./module_thanks');
 
 }).call(this);

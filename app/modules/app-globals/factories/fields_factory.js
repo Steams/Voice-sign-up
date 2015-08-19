@@ -14,18 +14,17 @@
           name: "Interests"
         }, {
           name: "Skills"
+        }, {
+          name: "Confirm"
         }
       ];
       current_index = 0;
-      factory.active = function() {
-        return this.fields[current_index];
-      };
-      factory.getIndex = function() {
-        return current_index;
-      };
       factory.getNext = function() {
         current_index += 1;
-        return this.active();
+        return this.fields[current_index - 1];
+      };
+      factory.refresh = function() {
+        return current_index = 0;
       };
       return factory;
     }

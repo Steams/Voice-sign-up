@@ -1,0 +1,93 @@
+dark-red = #D33B3B
+light-red = #F54C4C
+
+.firework
+    position absolute
+    top 50%
+    left 50%
+    height 20px
+    width 20px
+    border 1px solid white
+    overflow hidden
+    transform-origin center center
+    transform rotate(45deg)
+
+@-webkit-keyframes spin{
+    0% {
+        -webkit-clip-path inset(0px 0px 0px 0px)
+    }
+    12.5% {
+        -webkit-clip-path inset(0px 0px 0px 100%)
+    }
+    13% {
+        -webkit-clip-path inset(0px 100% 0px 0px)
+    }
+    25% {
+        -webkit-clip-path inset(0px 0px 0px 0px)
+    }
+    37.5% {
+        -webkit-clip-path inset(0px 0px 0px 100%)
+    }
+    38% {
+        -webkit-clip-path inset(0px 100% 0px 0px)
+    }
+    50% {
+        -webkit-clip-path inset(0px 0px 0px 0px)
+    }
+    62.5% {
+        -webkit-clip-path inset(0px 100% 0px 0px)
+    }
+    63% {
+        -webkit-clip-path inset(0px 0px 0px 0px)
+    }
+    75% {
+        -webkit-clip-path inset(0px 0px 0px 100%)
+    }
+    50% {
+        -webkit-clip-path inset(0px 100% 0px 0px)
+    }
+    75% {
+        -webkit-clip-path inset(0px 0px 0px 0px)
+    }
+    87.5% {
+        -webkit-clip-path inset(0px 0px 0px 100%)
+    }
+    88% {
+        -webkit-clip-path inset(0px 100% 0px 0px)
+    }
+    100% {
+        -webkit-clip-path inset(0px 0px 0px 0px)
+    }
+}
+.firework:after
+    position absolute
+    top 50%
+    left 50%
+    height 200%
+    width 200%
+    content ""
+    background-color black
+    opacity 0.3
+    transform-origin center center
+    transform translate(-50%,-50%) rotate(-45deg)
+    animation spin 4s linear infinite
+
+.top,.bottom
+    position absolute
+    height 100%
+    width 200%
+
+.top
+    bottom 0px
+    left 0px
+    transform-origin left bottom
+    transform rotate(-45deg)
+    background-color light-red
+
+.bottom
+    position absolute
+    top 0px
+    right 0px
+    transform-origin right top
+    transform rotate(-45deg)
+    background-color dark-red

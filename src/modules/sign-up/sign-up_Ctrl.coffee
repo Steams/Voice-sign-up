@@ -1,202 +1,226 @@
 require('../../lib/annyang.min.js')
-#formComp = require('./components/form_component')
 
 angular.module "voice-signup"
-    .controller 'sign-up_Ctrl',['$scope','Fields_factory',($scope,fields_fact)->
-        $scope.word = ""
-        $scope.keyboard = {
-            rows : [
-                {
-                    rowNumber:1,
-                    rowKeys:[
-                        {keyValue:"q", keyClass:"", keyMod:""},
-                        {keyValue:"w", keyClass:"", keyMod:""},
-                        {keyValue:"e", keyClass:"", keyMod:""},
-                        {keyValue:"r", keyClass:"", keyMod:""},
-                        {keyValue:"t", keyClass:"", keyMod:""},
-                        {keyValue:"y", keyClass:"", keyMod:""},
-                        {keyValue:"u", keyClass:"", keyMod:""},
-                        {keyValue:"i", keyClass:"", keyMod:""},
-                        {keyValue:"o", keyClass:"", keyMod:""},
-                        {keyValue:"p", keyClass:"", keyMod:""},
-                    ]
-                },
-                {
-                    rowNumber:2,
-                    rowKeys:[
-                        {keyValue:"a", keyClass:"", keyMod:""},
-                        {keyValue:"s", keyClass:"", keyMod:""},
-                        {keyValue:"d", keyClass:"", keyMod:""},
-                        {keyValue:"f", keyClass:"", keyMod:""},
-                        {keyValue:"g", keyClass:"", keyMod:""},
-                        {keyValue:"h", keyClass:"", keyMod:""},
-                        {keyValue:"j", keyClass:"", keyMod:""},
-                        {keyValue:"k", keyClass:"", keyMod:""},
-                        {keyValue:"l", keyClass:"", keyMod:""},
-                    ]
-                },
-                {
-                    rowNumber:3,
-                    rowKeys:[
-                        {keyValue:"^", keyClass:"", keyMod:""},
-                        {keyValue:"z", keyClass:"", keyMod:""},
-                        {keyValue:"x", keyClass:"", keyMod:""},
-                        {keyValue:"c", keyClass:"", keyMod:""},
-                        {keyValue:"v", keyClass:"", keyMod:""},
-                        {keyValue:"b", keyClass:"", keyMod:""},
-                        {keyValue:"n", keyClass:"", keyMod:""},
-                        {keyValue:"m", keyClass:"", keyMod:""},
-                        {keyValue:",", keyClass:"", keyMod:""},
-                        {keyValue:".", keyClass:"", keyMod:""},
-                        {keyValue:"<--", keyClass:"", keyMod:""},
-                    ]
-                },
-                {
-                    rowNumber:4,
-                    rowKeys:[
-                        {keyValue:" ", keyClass:"mod-space", keyMod:""},
-                    ]
-                }
-            ]
-            
-        }
+.controller 'sign-up_Ctrl',['$scope','Fields_factory','keyboard_factory',($scope,fields_fact,keyboard_factory)->
 
+    commands = {
+        'test' :()->
+            alert("works")
 
-        $scope.unPress = (key)->
-            for x in [0...$scope.keyboard.rows.length] by 1
-                row = $scope.keyboard.rows[x]
-                for i in [0...row.rowKeys.length] by 1
-                    k = row.rowKeys[i].keyValue
-                    if(k == key || k.toUpperCase() == key)
-                        console.log $scope.keyboard.rows[x].rowKeys[i].keyValue
-                        $scope.keyboard.rows[x].rowKeys[i].keyMod = ""
-                        $scope.$apply()
-
-        $scope.press = (key)->
-            for x in [0...$scope.keyboard.rows.length] by 1
-                row = $scope.keyboard.rows[x]
-                for i in [0...row.rowKeys.length] by 1
-                    k = row.rowKeys[i].keyValue
-                    if(k == key || k.toUpperCase() == key)
-                        console.log $scope.keyboard.rows[x].rowKeys[i].keyValue
-                        $scope.keyboard.rows[x].rowKeys[i].keyMod = "pressed"
-                        if(key == "<--")
-                            console.log "backspace"
-                            $scope.backspace()
-                            return 0
-                        if(key == " ")
-                            $scope.space()
-                            return 0
-                        $scope.word += key
-                        setTimeout(()->
-                            $scope.unPress(key)
-                        ,250
-                        )
-                        $scope.$apply()
-
-        $scope.undo = ()->
-            console.log "ndoing"
-            x = 0
-            l = $scope.word.length
-            typeSpeed = setInterval(()->
-                console.log "interval"
-                if(x < l)
-                    $scope.press("<--")
-                else
-                    clearInterval(typeSpeed)
-                    $scope.unPress("<--")
-                x++
-                $scope.$apply()
-            ,150
-            )
-
-        $scope.space = ()->
+        'next' : ()->
+            console.log "called"
+            $scope.next()
             $scope.$apply()
-            $scope.word += " "
+
+        'type *word': (word)->
+            console.log "typing"
+            $scope.type(word,true)
+
+        'undo': ()->
+            $scope.undo()
+            $scope.$apply()
+    }
+
+
+    input = (char)->
+        $scope.word += char
+
+    unInput = (length)->
+        $scope.word = $scope.word.slice(0,-length)
+
+
+    press = (key,shouldInput)->
+        for x in [0...$scope.keyboard.rows.length] by 1
+            row = $scope.keyboard.rows[x]
+            for i in [0...row.rowKeys.length] by 1
+                k = row.rowKeys[i].keyValue
+                if(k == key || k.toUpperCase() == key)
+                    # console.log $scope.keyboard.rows[x].rowKeys[i].keyValue
+                    $scope.keyboard.rows[x].rowKeys[i].keyMod = "pressed"
+                    if(key == "<")
+                        console.log "backspace"
+                        $scope.backspace()
+                        return 0
+                    if(key == " ")
+                        $scope.space()
+                        return 0
+                    setTimeout(()->
+                        $scope.unPress(key)
+                    ,250
+                    )
+                    break
+        if(shouldInput)
+            input(key)
+        $scope.$apply()
+
+    unPress = (key)->
+        for x in [0...$scope.keyboard.rows.length] by 1
+            row = $scope.keyboard.rows[x]
+            # console.log row
+            for i in [0...row.rowKeys.length] by 1
+                k = row.rowKeys[i].keyValue
+                if(k == key || k.toUpperCase() == key)
+                    # console.log $scope.keyboard.rows[x].rowKeys[i].keyValue
+                    $scope.keyboard.rows[x].rowKeys[i].keyMod = ""
+                    $scope.$apply()
+
+    undo = ()->
+        # console.log "undoing"
+        x = 0
+        l = $scope.word.length
+        typeSpeed = setInterval(()->
+            console.log "interval"
+            if(x < l)
+                $scope.press("<")
+            else
+                clearInterval(typeSpeed)
+            x++
+            $scope.$apply()
+        ,150
+        )
+
+    space = ()->
+        $scope.word += " "
+        setTimeout(()->
+            $scope.unPress(" ")
+        ,200
+        )
+
+    backspace = ()->
+            unInput(1)
             setTimeout(()->
-                $scope.unPress(" ")
+                $scope.unPress("<")
             ,200
             )
 
-        $scope.backspace = ()->
-                $scope.$apply()
-                $scope.word = $scope.word.slice(0,-1)
-                setTimeout(()->
-                    $scope.unPress("<--")
-                ,200
-                )
+    modify = (word)->
+        word = word.replace(" @ ","@")
+        word = word.replace(" at ","@")
+        word = word.replace(" At ","@")
+        word = word.replace(" AT ","@")
+        word = if word.endsWith(".com") then word.replace(/ /g,'').toLowerCase() else word
+        return word
 
-        $scope.type = (word)->
-            console.log "typing "+word
-            x =0
-            l = word.length
-            typeSpeed = setInterval(()->
-                if(x < l)
-                    c = word.charAt(x)
-                    console.log "typing "+c
-                    $scope.press(c)
-                    x++
-                else
-                    clearInterval(typeSpeed)
-            ,100
+    type = (word,shouldInput)->
+        document.getElementById("prompt-input").focus()
+        word = modify(word)
+        console.log "typing "+word
+        current_index = 0
+        length = word.length
+        typeSpeed = setInterval(()->
+            if(current_index < length)
+                c = word.charAt(current_index)
+                $scope.press(c,shouldInput)
+                current_index++
+            else
+                clearInterval(typeSpeed)
+        ,100
+        )
+
+    process = (field,value)->
+        $scope.previous.push({name:field,value:value})
+        $scope.$apply()
+        return 0
+
+    next = ()->
+        $scope.count++
+        process($scope.field.name,$scope.word)
+        $scope.field = fields_fact.getNext()
+        if($scope.count > 4)
+            $scope.done = true
+        $scope.word = ""
+
+    document.getElementById("prompt-input").onkeydown = (evt)->
+        evt = evt || window.event
+        charCode = evt.keyCode || evt.which
+        # console.log charCode
+        switch charCode
+            when 8 then ( evt.preventDefault()
+            $scope.press("<")
             )
 
-        $scope.fields = ()-> return fields_fact.fields
-
-        $scope.init = ()->
-            $scope.current_field = fields_fact.active()
-            # should trigger the layout to play into animations
-            
-        $scope.process = (field)->
-            $scope.label = field.name
-            return 0
-
-        $scope.start = ()->
-            console.log "starting"
-            $scope.label = fields_fact.active().name
-            fields_fact.getNext()
-            console.log fields_fact.getIndex()
-
-        commands = {
-            'next' : ()->
-                console.log "called"
-                $scope.start()
+    document.onkeypress = (evt)->
+        # evt.preventDefault()
+        evt = evt || window.event
+        charCode = evt.keyCode || evt.which
+        if(charCode == 13)
+            console.log evt.target.className
+            if(evt.target.className != 'js-fields-item-input')
+                $scope.next()
                 $scope.$apply()
+        console.log charCode
+        charStr = String.fromCharCode(charCode)
+        $scope.press(charStr)
 
-            'one' :()->
-                alert("works")
 
-            'type *name': (name)->
-                console.log "typing"
-                $scope.type(name)
+    animateIn = (x,i)->
+        # console.log $scope.keyboard.rows[x].rowKeys[i].keyValue
+        vm = Math.floor Math.random() * 1000
+        # console.log vm
+        setTimeout ->
+            # console.log ""+x+" "+i
+            $scope.keyboard.rows[x].rowKeys[i].keyMod ="key-intro"
+            # console.log "changed"
+            $scope.$apply()
+        ,vm
 
-            'undo': ()->
-                $scope.undo()
-                $scope.$apply()
-        }
+    intro = ()->
+        # console.log $scope.keyboard.rows
+        for x in [0...$scope.keyboard.rows.length] by 1
+            # console.log x
+            row = $scope.keyboard.rows[x]
+            for i in [0...row.rowKeys.length] by 1
+                $scope.animateIn(x,i)
 
-        document.getElementById("prompt-input").onkeydown = (evt)->
-            evt = evt || window.event
-            charCode = evt.keyCode || evt.which
-            console.log charCode
-            switch charCode
-                when 8 then (evt.preventDefault()
-                $scope.press("<--")
-                )
+    unIntro = ()->
+        for x in [0...$scope.keyboard.rows.length] by 1
+            # console.log x
+            row = $scope.keyboard.rows[x]
+            for i in [0...row.rowKeys.length] by 1
+                $scope.keyboard.rows[x].rowKeys[i].keyMod ="key-intro"
 
-        document.onkeypress = (evt)->
-            evt.preventDefault()
-            evt = evt || window.event
-            charCode = evt.keyCode || evt.which
-            console.log charCode
-            charStr = String.fromCharCode(charCode)
-            $scope.press(charStr)
-        
+
+    reveal = ()->
         setTimeout(()->
-            $scope.type("Radcliffe")
-        ,1000
+            cl = document.getElementsByClassName("js-monitor")[0].className
+            document.getElementsByClassName("js-monitor")[0].className = cl.replace("isTransitioning",'')
+            # console.log document.getElementsByClassName("js-monitor")[0].className
+        ,500
         )
-        #annyang.addCommands(commands)
-        #annyang.start()
 
+
+    init = ()->
+        # $scope.unIntro()
+        annyang.addCommands(commands)
+        annyang.start()
+        # setTimeout(()->
+        #     $scope.type("Radcliffe at RObinson",true)
+        # ,1500
+        # )
+        $scope.reveal()
+        setTimeout ->
+            $scope.intro()
+        ,1000
+        document.getElementById("prompt-input").focus()
+
+    $scope.keyboard = keyboard_factory.keyboard
+    $scope.done = false
+    $scope.count = 0
+    $scope.reveal = reveal
+    $scope.word = ""
+    $scope.previous = []
+    $scope.unPress = unPress
+    $scope.press = press
+    $scope.undo = undo
+    $scope.space = space
+    $scope.backspace = backspace
+    $scope.type = type
+    $scope.field = fields_fact.getNext()
+    $scope.intro = intro
+    $scope.unIntro = unIntro
+    $scope.animateIn = animateIn
+    $scope.next = next
+
+    init()
+    return 0
 ]

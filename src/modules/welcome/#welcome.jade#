@@ -18,7 +18,6 @@
             .welcome-body-prompt-words " Sign me up "
             .welcome-body-prompt-decoration {{decoration}}
             .welcome-body-recent-ribbon
-            //-.weclome-body-prompt-bar.mod-2
         .welcome-body-recent
             .welcome-body-recent-header(data-heading="Pelican" data-title="{{titles[titleIndex]}}")
             .welcome-body-slideshow

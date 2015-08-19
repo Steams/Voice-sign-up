@@ -30,18 +30,17 @@
           name: "Interests"
         }, {
           name: "Skills"
+        }, {
+          name: "Confirm"
         }
       ];
       current_index = 0;
-      factory.active = function() {
-        return this.fields[current_index];
-      };
-      factory.getIndex = function() {
-        return current_index;
-      };
       factory.getNext = function() {
         current_index += 1;
-        return this.active();
+        return this.fields[current_index - 1];
+      };
+      factory.refresh = function() {
+        return current_index = 0;
       };
       return factory;
     }
@@ -58,21 +57,17 @@
 },{}],4:[function(require,module,exports){
 (function() {
   angular.module('voice-signup').config(function($stateProvider) {
-    return $stateProvider.state('base', {
+    return $stateProvider.state('welcome', {
       url: '',
-      templateUrl: '/app/modules/app-globals/partials/base.html',
-      controller: "global_Ctrl"
-    }).state('base.welcome', {
-      url: '/welcome',
       templateUrl: '/app/modules/welcome/welcome.html',
       controller: "welcome_Ctrl"
-    }).state('base.sign-up', {
+    }).state('sign-up', {
       url: '/sign-up',
-      templateUrl: '/app/modules/sign-up/partials/sign-up.html',
+      templateUrl: '/app/modules/sign-up/sign-up.html',
       controller: "sign-up_Ctrl"
-    }).state('base.thanks', {
+    }).state('thanks', {
       url: '/thanks',
-      templateUrl: '/app/modules/thansk/partials/thanks.html',
+      templateUrl: '/app/modules/thanks/thanks.html',
       controller: "thanks_Ctrl"
     });
   });
@@ -84,7 +79,7 @@
   'use strict';
   var app;
 
-  app = angular.module('voice-signup', ['ngRoute', 'ui.router', 'react']);
+  app = angular.module('voice-signup', ['ngRoute', 'ui.router', 'ngAnimate']);
 
   require('./module_app-globals');
 
@@ -92,13 +87,11 @@
 
   require('./module_welcome');
 
-  require('./testComp');
-
-  require('./testCtrl');
+  require('./module_thanks');
 
 }).call(this);
 
-},{"./module_app-globals":6,"./module_sign-up":7,"./module_welcome":8,"./testComp":10,"./testCtrl":11}],6:[function(require,module,exports){
+},{"./module_app-globals":6,"./module_sign-up":7,"./module_thanks":8,"./module_welcome":9}],6:[function(require,module,exports){
 (function() {
   require('./app-globals/router');
 
@@ -112,23 +105,31 @@
 (function() {
   require("./sign-up/sign-up_Ctrl");
 
+  require("./sign-up/keyboard_factory");
+
 }).call(this);
 
-},{"./sign-up/sign-up_Ctrl":9}],8:[function(require,module,exports){
+},{"./sign-up/keyboard_factory":10,"./sign-up/sign-up_Ctrl":11}],8:[function(require,module,exports){
+(function() {
+  require("./thanks/thanks_Ctrl");
+
+}).call(this);
+
+},{"./thanks/thanks_Ctrl":12}],9:[function(require,module,exports){
 (function() {
   require("./welcome/welcome_Ctrl");
 
+  require("./welcome/decoration_factory");
+
 }).call(this);
 
-},{"./welcome/welcome_Ctrl":12}],9:[function(require,module,exports){
+},{"./welcome/decoration_factory":13,"./welcome/welcome_Ctrl":14}],10:[function(require,module,exports){
 (function() {
-  require('../../lib/annyang.min.js');
-
-  angular.module("voice-signup").controller('sign-up_Ctrl', [
-    '$scope', 'Fields_factory', function($scope, fields_fact) {
-      var commands;
-      $scope.word = "";
-      $scope.keyboard = {
+  angular.module('voice-signup').factory('keyboard_factory', [
+    function() {
+      var factory;
+      factory = this;
+      factory.keyboard = {
         rows: [
           {
             rowNumber: 1,
@@ -136,43 +137,43 @@
               {
                 keyValue: "q",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "w",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "e",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "r",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "t",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "y",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "u",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "i",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "o",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "p",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }
             ]
           }, {
@@ -181,39 +182,39 @@
               {
                 keyValue: "a",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "s",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "d",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "f",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "g",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "h",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "j",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "k",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "l",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }
             ]
           }, {
@@ -222,47 +223,47 @@
               {
                 keyValue: "^",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "z",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "x",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "c",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "v",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "b",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "n",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: "m",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: ",",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
                 keyValue: ".",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }, {
-                keyValue: "<--",
+                keyValue: "<",
                 keyClass: "",
-                keyMod: ""
+                keyMod: "invis"
               }
             ]
           }, {
@@ -271,13 +272,79 @@
               {
                 keyValue: " ",
                 keyClass: "mod-space",
-                keyMod: ""
+                keyMod: "invis"
               }
             ]
           }
         ]
       };
-      $scope.unPress = function(key) {
+      return factory;
+    }
+  ]);
+
+}).call(this);
+
+},{}],11:[function(require,module,exports){
+(function() {
+  require('../../lib/annyang.min.js');
+
+  angular.module("voice-signup").controller('sign-up_Ctrl', [
+    '$scope', 'Fields_factory', 'keyboard_factory', function($scope, fields_fact, keyboard_factory) {
+      var animateIn, backspace, commands, init, input, intro, modify, next, press, process, reveal, space, type, unInput, unIntro, unPress, undo;
+      commands = {
+        'test': function() {
+          return alert("works");
+        },
+        'next': function() {
+          console.log("called");
+          $scope.next();
+          return $scope.$apply();
+        },
+        'type *word': function(word) {
+          console.log("typing");
+          return $scope.type(word, true);
+        },
+        'undo': function() {
+          $scope.undo();
+          return $scope.$apply();
+        }
+      };
+      input = function(char) {
+        return $scope.word += char;
+      };
+      unInput = function(length) {
+        return $scope.word = $scope.word.slice(0, -length);
+      };
+      press = function(key, shouldInput) {
+        var i, j, k, m, ref, ref1, row, x;
+        for (x = j = 0, ref = $scope.keyboard.rows.length; j < ref; x = j += 1) {
+          row = $scope.keyboard.rows[x];
+          for (i = m = 0, ref1 = row.rowKeys.length; m < ref1; i = m += 1) {
+            k = row.rowKeys[i].keyValue;
+            if (k === key || k.toUpperCase() === key) {
+              $scope.keyboard.rows[x].rowKeys[i].keyMod = "pressed";
+              if (key === "<") {
+                console.log("backspace");
+                $scope.backspace();
+                return 0;
+              }
+              if (key === " ") {
+                $scope.space();
+                return 0;
+              }
+              setTimeout(function() {
+                return $scope.unPress(key);
+              }, 250);
+              break;
+            }
+          }
+        }
+        if (shouldInput) {
+          input(key);
+        }
+        return $scope.$apply();
+      };
+      unPress = function(key) {
         var i, j, k, ref, results, row, x;
         results = [];
         for (x = j = 0, ref = $scope.keyboard.rows.length; j < ref; x = j += 1) {
@@ -288,7 +355,6 @@
             for (i = m = 0, ref1 = row.rowKeys.length; m < ref1; i = m += 1) {
               k = row.rowKeys[i].keyValue;
               if (k === key || k.toUpperCase() === key) {
-                console.log($scope.keyboard.rows[x].rowKeys[i].keyValue);
                 $scope.keyboard.rows[x].rowKeys[i].keyMod = "";
                 results1.push($scope.$apply());
               } else {
@@ -300,187 +366,258 @@
         }
         return results;
       };
-      $scope.press = function(key) {
-        var i, j, k, m, ref, ref1, row, x;
-        for (x = j = 0, ref = $scope.keyboard.rows.length; j < ref; x = j += 1) {
-          row = $scope.keyboard.rows[x];
-          for (i = m = 0, ref1 = row.rowKeys.length; m < ref1; i = m += 1) {
-            k = row.rowKeys[i].keyValue;
-            if (k === key || k.toUpperCase() === key) {
-              console.log($scope.keyboard.rows[x].rowKeys[i].keyValue);
-              $scope.keyboard.rows[x].rowKeys[i].keyMod = "pressed";
-              if (key === "<--") {
-                console.log("backspace");
-                $scope.backspace();
-                return 0;
-              }
-              if (key === " ") {
-                $scope.space();
-                return 0;
-              }
-              $scope.word += key;
-              setTimeout(function() {
-                return $scope.unPress(key);
-              }, 250);
-              $scope.$apply();
-            }
-          }
-        }
-      };
-      $scope.undo = function() {
+      undo = function() {
         var l, typeSpeed, x;
-        console.log("ndoing");
         x = 0;
         l = $scope.word.length;
         return typeSpeed = setInterval(function() {
           console.log("interval");
           if (x < l) {
-            $scope.press("<--");
+            $scope.press("<");
           } else {
             clearInterval(typeSpeed);
-            $scope.unPress("<--");
           }
           x++;
           return $scope.$apply();
         }, 150);
       };
-      $scope.space = function() {
-        $scope.$apply();
+      space = function() {
         $scope.word += " ";
         return setTimeout(function() {
           return $scope.unPress(" ");
         }, 200);
       };
-      $scope.backspace = function() {
-        $scope.$apply();
-        $scope.word = $scope.word.slice(0, -1);
+      backspace = function() {
+        unInput(1);
         return setTimeout(function() {
-          return $scope.unPress("<--");
+          return $scope.unPress("<");
         }, 200);
       };
-      $scope.type = function(word) {
-        var l, typeSpeed, x;
+      modify = function(word) {
+        word = word.replace(" @ ", "@");
+        word = word.replace(" at ", "@");
+        word = word.replace(" At ", "@");
+        word = word.replace(" AT ", "@");
+        word = word.endsWith(".com") ? word.replace(/ /g, '').toLowerCase() : word;
+        return word;
+      };
+      type = function(word, shouldInput) {
+        var current_index, length, typeSpeed;
+        document.getElementById("prompt-input").focus();
+        word = modify(word);
         console.log("typing " + word);
-        x = 0;
-        l = word.length;
+        current_index = 0;
+        length = word.length;
         return typeSpeed = setInterval(function() {
           var c;
-          if (x < l) {
-            c = word.charAt(x);
-            console.log("typing " + c);
-            $scope.press(c);
-            return x++;
+          if (current_index < length) {
+            c = word.charAt(current_index);
+            $scope.press(c, shouldInput);
+            return current_index++;
           } else {
             return clearInterval(typeSpeed);
           }
         }, 100);
       };
-      $scope.fields = function() {
-        return fields_fact.fields;
-      };
-      $scope.init = function() {
-        return $scope.current_field = fields_fact.active();
-      };
-      $scope.process = function(field) {
-        $scope.label = field.name;
+      process = function(field, value) {
+        $scope.previous.push({
+          name: field,
+          value: value
+        });
+        $scope.$apply();
         return 0;
       };
-      $scope.start = function() {
-        console.log("starting");
-        $scope.label = fields_fact.active().name;
-        fields_fact.getNext();
-        return console.log(fields_fact.getIndex());
-      };
-      commands = {
-        'next': function() {
-          console.log("called");
-          $scope.start();
-          return $scope.$apply();
-        },
-        'one': function() {
-          return alert("works");
-        },
-        'type *name': function(name) {
-          console.log("typing");
-          return $scope.type(name);
-        },
-        'undo': function() {
-          $scope.undo();
-          return $scope.$apply();
+      next = function() {
+        $scope.count++;
+        process($scope.field.name, $scope.word);
+        $scope.field = fields_fact.getNext();
+        if ($scope.count > 4) {
+          $scope.done = true;
         }
+        return $scope.word = "";
       };
       document.getElementById("prompt-input").onkeydown = function(evt) {
         var charCode;
         evt = evt || window.event;
         charCode = evt.keyCode || evt.which;
-        console.log(charCode);
         switch (charCode) {
           case 8:
             evt.preventDefault();
-            return $scope.press("<--");
+            return $scope.press("<");
         }
       };
       document.onkeypress = function(evt) {
         var charCode, charStr;
-        evt.preventDefault();
         evt = evt || window.event;
         charCode = evt.keyCode || evt.which;
+        if (charCode === 13) {
+          console.log(evt.target.className);
+          if (evt.target.className !== 'js-fields-item-input') {
+            $scope.next();
+            $scope.$apply();
+          }
+        }
         console.log(charCode);
         charStr = String.fromCharCode(charCode);
         return $scope.press(charStr);
       };
-      return setTimeout(function() {
-        return $scope.type("Radcliffe");
-      }, 1000);
+      animateIn = function(x, i) {
+        var vm;
+        vm = Math.floor(Math.random() * 1000);
+        return setTimeout(function() {
+          $scope.keyboard.rows[x].rowKeys[i].keyMod = "key-intro";
+          return $scope.$apply();
+        }, vm);
+      };
+      intro = function() {
+        var i, j, ref, results, row, x;
+        results = [];
+        for (x = j = 0, ref = $scope.keyboard.rows.length; j < ref; x = j += 1) {
+          row = $scope.keyboard.rows[x];
+          results.push((function() {
+            var m, ref1, results1;
+            results1 = [];
+            for (i = m = 0, ref1 = row.rowKeys.length; m < ref1; i = m += 1) {
+              results1.push($scope.animateIn(x, i));
+            }
+            return results1;
+          })());
+        }
+        return results;
+      };
+      unIntro = function() {
+        var i, j, ref, results, row, x;
+        results = [];
+        for (x = j = 0, ref = $scope.keyboard.rows.length; j < ref; x = j += 1) {
+          row = $scope.keyboard.rows[x];
+          results.push((function() {
+            var m, ref1, results1;
+            results1 = [];
+            for (i = m = 0, ref1 = row.rowKeys.length; m < ref1; i = m += 1) {
+              results1.push($scope.keyboard.rows[x].rowKeys[i].keyMod = "key-intro");
+            }
+            return results1;
+          })());
+        }
+        return results;
+      };
+      reveal = function() {
+        return setTimeout(function() {
+          var cl;
+          cl = document.getElementsByClassName("js-monitor")[0].className;
+          return document.getElementsByClassName("js-monitor")[0].className = cl.replace("isTransitioning", '');
+        }, 500);
+      };
+      init = function() {
+        annyang.addCommands(commands);
+        annyang.start();
+        $scope.reveal();
+        setTimeout(function() {
+          return $scope.intro();
+        }, 1000);
+        return document.getElementById("prompt-input").focus();
+      };
+      $scope.keyboard = keyboard_factory.keyboard;
+      $scope.done = false;
+      $scope.count = 0;
+      $scope.reveal = reveal;
+      $scope.word = "";
+      $scope.previous = [];
+      $scope.unPress = unPress;
+      $scope.press = press;
+      $scope.undo = undo;
+      $scope.space = space;
+      $scope.backspace = backspace;
+      $scope.type = type;
+      $scope.field = fields_fact.getNext();
+      $scope.intro = intro;
+      $scope.unIntro = unIntro;
+      $scope.animateIn = animateIn;
+      $scope.next = next;
+      init();
+      return 0;
     }
   ]);
 
 }).call(this);
 
-},{"../../lib/annyang.min.js":1}],10:[function(require,module,exports){
-var newComp = React.createClass({displayName: "newComp",
-    render : function(){
-        return React.createElement("h2", null, "Hi from nested comp")
-    }
-})
-
-angular.module("voice-signup").directive('newComp',['reactDirective',function(reactDirective){
-    return reactDirective(newComp);
-}]);
-
-var testComp = React.createClass({displayName: "testComp",
-    render: function() {
-        return (
-            React.createElement("newComp", null)
-        )
-    }
-});
-
-//angular.module("voice-signup").value('testComp',testComp);
-
-angular.module("voice-signup").directive('testComp',['reactDirective',function(reactDirective){
-    return reactDirective(testComp,['name']);
-}]);
-
-},{}],11:[function(require,module,exports){
+},{"../../lib/annyang.min.js":1}],12:[function(require,module,exports){
 (function() {
-  angular.module("voice-signup").controller("testCtrl", [
-    '$scope', function($scope) {
-      $scope.obj = {
-        name: "Skai"
-      };
-      return $scope.change = function() {
-        $scope.obj.name = "Radcliffe";
-        return console.log($scope.obj);
-      };
+  angular.module("voice-signup").controller("thanks_Ctrl", ["$scope", "$state", function($scope, $state) {}]);
+
+}).call(this);
+
+},{}],13:[function(require,module,exports){
+(function() {
+  angular.module("voice-signup").factory('decoration_factory', [
+    function() {
+      var factory;
+      factory = this;
+      factory.text = "object merge_sort extends App{ def mergeSort(xs:List[Int]):List[Int] = { def merge( xs:List[Int], ys:List[Int]):List[Int] = { var breakOuter:Boolean = false var breakInner:Boolean = false var outerCount:Int = 0 var i = 0; val zs = for( n <- xs; outerCount:Int = outerCount + 1; if(!breakOuter); innerCount = i; merged = 0; k <-ys; breakI = breakInner; if(!breakI) ) yield { i = i +  1 if(n > k){ if(outerCount == xs.length){ n :: ys } else{ breakInner = true n } } else{ if(innerCount == ys.length){ breakOuter = true k :: xs }else{ k } } } val res = zs.foreach( s => for(n <- s) yield { n.asInstanceOf[Int] }) res } def sort(xs:List[Int]):List[Int] = { if(xs.length > 1){ merge(sort(xs.take(xs.length/2)),sort(xs.drop(xs.length/2))) }else{ xs } } sort(xs) } val xs = 2 ::3 :: 12 :: 3 :: 5 :: 10 :: Nil Console print mergeSort(xs); } object merge_sort extends App{ def mergeSort(xs:List[Int]):List[Int] = { def merge( xs:List[Int], ys:List[Int]):List[Int] = { var breakOuter:Boolean = false var breakInner:Boolean = false var outerCount:Int = 0 var i = 0; val zs = for( n <- xs; outerCount:Int = outerCount + 1; if(!breakOuter); innerCount = i; merged = 0; k <-ys; breakI = breakInner; if(!breakI) ) yield { i = i +  1 if(n > k){ if(outerCount == xs.length){ n :: ys } else{ breakInner = true n } } else{ if(innerCount == ys.length){ breakOuter = true k :: xs }else{ k } } } val res = zs.foreach( s => for(n <- s) yield { n.asInstanceOf[Int] }) res } def sort(xs:List[Int]):List[Int] = { if(xs.length > 1){ merge(sort(xs.take(xs.length/2)),sort(xs.drop(xs.length/2))) }else{ xs } } sort(xs) } val xs = 2 ::3 :: 12 :: 3 :: 5 :: 10 :: Nil Console print mergeSort(xs); } object merge_sort extends App{ def mergeSort(xs:List[Int]):List[Int] = { def merge( xs:List[Int], ys:List[Int]):List[Int] = { var breakOuter:Boolean = false var breakInner:Boolean = false var outerCount:Int = 0 var i = 0; val zs = for( n <- xs; outerCount:Int = outerCount + 1; if(!breakOuter); innerCount = i; merged = 0; k <-ys; breakI = breakInner; if(!breakI) ) yield { i = i +  1 if(n > k){ if(outerCount == xs.length){ n :: ys } else{ breakInner = true n } } else{ if(innerCount == ys.length){ breakOuter = true k :: xs }else{ k } } } val res = zs.foreach( s => for(n <- s) yield { n.asInstanceOf[Int] }) res } def sort(xs:List[Int]):List[Int] = { if(xs.length > 1){ merge(sort(xs.take(xs.length/2)),sort(xs.drop(xs.length/2))) }else{ xs } } sort(xs) } val xs = 2 ::3 :: 12 :: 3 :: 5 :: 10 :: Nil Console print mergeSort(xs); } object merge_sort extends App{ def mergeSort(xs:List[Int]):List[Int] = { def merge( xs:List[Int], ys:List[Int]):List[Int] = { var breakOuter:Boolean = false var breakInner:Boolean = false var outerCount:Int = 0 var i = 0; val zs = for( n <- xs; outerCount:Int = outerCount + 1; if(!breakOuter); innerCount = i; merged = 0; k <-ys; breakI = breakInner; if(!breakI) ) yield { i = i +  1 if(n > k){ if(outerCount == xs.length){ n :: ys } else{ breakInner = true n } } else{ if(innerCount == ys.length){ breakOuter = true k :: xs }else{ k } } } val res = zs.foreach( s => for(n <- s) yield { n.asInstanceOf[Int] }) res } def sort(xs:List[Int]):List[Int] = { if(xs.length > 1){ merge(sort(xs.take(xs.length/2)),sort(xs.drop(xs.length/2))) }else{ xs } } sort(xs) } val xs = 2 ::3 :: 12 :: 3 :: 5 :: 10 :: Nil Console print mergeSort(xs); object merge_sort extends App{ def mergeSort(xs:List[Int]):List[Int] = { def merge( xs:List[Int], ys:List[Int]):List[Int] = { var breakOuter:Boolean = false var breakInner:Boolean = false var outerCount:Int = 0 var i = 0; val zs = for( n <- xs; outerCount:Int = outerCount + 1; if(!breakOuter); innerCount = i; merged = 0; k <-ys; breakI = breakInner; if(!breakI) ) yield { i = i +  1 if(n > k){ if(outerCount == xs.length){ n :: ys } else{ breakInner = true n } } else{ if(innerCount == ys.length){ breakOuter = true k :: xs }else{ k } } } val res = zs.foreach( s => for(n <- s) yield { n.asInstanceOf[Int] }) res } def sort(xs:List[Int]):List[Int] = { if(xs.length > 1){ merge(sort(xs.take(xs.length/2)),sort(xs.drop(xs.length/2))) }else{ xs } } sort(xs) } val xs = 2 ::3 :: 12 :: 3 :: 5 :: 10 :: Nil Console print mergeSort(xs); } object merge_sort extends App{ def mergeSort(xs:List[Int]):List[Int] = { def merge( xs:List[Int], ys:List[Int]):List[Int] = { var breakOuter:Boolean = false var breakInner:Boolean = false var outerCount:Int = 0 var i = 0; val zs = for( n <- xs; outerCount:Int = outerCount + 1; if(!breakOuter); innerCount = i; merged = 0; k <-ys; breakI = breakInner; if(!breakI) ) yield { i = i +  1 if(n > k){ if(outerCount == xs.length){ n :: ys } else{ breakInner = true n } } else{ if(innerCount == ys.length){ breakOuter = true k :: xs }else{ k } } } val res = zs.foreach( s => for(n <- s) yield { n.asInstanceOf[Int] }) res } def sort(xs:List[Int]):List[Int] = { if(xs.length > 1){ merge(sort(xs.take(xs.length/2)),sort(xs.drop(xs.length/2))) }else{ xs } } sort(xs) } val xs = 2 ::3 :: 12 :: 3 :: 5 :: 10 :: Nil Console print mergeSort(xs); } }";
+      return factory;
     }
   ]);
 
 }).call(this);
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function() {
-  angular.module('voice-signup').controller('welcome_Ctrl', ['$scope', function($scope) {}]);
+  angular.module('voice-signup').controller('welcome_Ctrl', [
+    '$scope', '$state', 'decoration_factory', 'Fields_factory', function($scope, $state, decorations, fields_fact) {
+      var commands, current, maxPic, minPic, next, transition;
+      $scope.decoration = decorations.text;
+      $scope.titles = ["Pelican", "Chatwa", "UWI Maps"];
+      $scope.titleIndex = 0;
+      minPic = 4;
+      maxPic = 13;
+      $scope.picIndex = minPic;
+      $scope.nextPicIndex = function() {
+        if ($scope.picIndex + 1 < maxPic + 1) {
+          return $scope.picIndex + 1;
+        } else {
+          return minPic;
+        }
+      };
+      $scope.nextPic = function() {
+        $scope.titleIndex = $scope.titleIndex + 1 < 3 ? $scope.titleIndex + 1 : 0;
+        return $scope.picIndex = $scope.picIndex + 1 < maxPic + 1 ? $scope.picIndex + 1 : minPic;
+      };
+      current = document.getElementsByClassName("welcome-body-image")[0];
+      next = document.getElementsByClassName("welcome-body-image")[1];
+      $scope.slide = function() {
+        console.log("sliding");
+        current.className += " isSliding";
+        next.className += " isSliding";
+        return setTimeout(function() {
+          $scope.nextPic();
+          $scope.$apply();
+          current.className = current.className.replace(" isSliding", "");
+          return next.className = next.className.replace(" isSliding", "");
+        }, 300);
+      };
+      setInterval(function() {
+        return $scope.slide();
+      }, 3000);
+      document.onkeypress = function(evt) {
+        var charCode;
+        evt = evt || window.event;
+        charCode = evt.keyCode || evt.which;
+        if (charCode === 13) {
+          return transition();
+        }
+      };
+      transition = function() {
+        document.getElementsByClassName("js-monitor")[0].className += " isTransitioning";
+        return setTimeout(function() {
+          fields_fact.refresh();
+          return $state.go("sign-up");
+        }, 1000);
+      };
+      return commands = {
+        "sign me up": transition
+      };
+    }
+  ]);
 
 }).call(this);
 

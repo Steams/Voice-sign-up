@@ -1,0 +1,303 @@
+my-white = rgb(255,255,200)
+key-shadow = rgba(66, 66, 66, 0.50) 
+key-bg = #F3F2DD
+key-accent = #FFF
+key-fg = #66665E
+bg-blue =#53BAE6 
+
+@-webkit-keyframes key-pulse{
+
+    0% {
+        opacity 0
+        height 0px
+        width 0px
+    }
+
+    20% {
+        opacity 0.7
+        height 50%
+        width 50%
+    }
+
+    100% {
+        opacity 0.3
+        height 120%
+        width 120%
+    }
+
+}
+
+.base.mod-sign-up
+    display flex
+    overflow-y hidden
+    overflow-x hidden
+    flex-direction row
+
+.sign-up-body-holder
+    position relative
+    display flex
+    height 100%
+    width 100%
+    flex-direction column
+
+.sign-up-prompter-holder
+    height 250px
+    width 600px
+    margin 0 auto
+    padding-top 40px
+    padding-left 125px
+    display flex
+    flex-direction column
+    justify-content center
+
+.prompter
+    position relative
+    display flex
+    flex-direction column
+
+.prompter-label
+    position relative
+    height 40%
+    width 500px
+    margin 0 auto
+    p
+        position relative
+        margin 0 auto
+        text-align center
+        padding-bottom 40px
+        color white
+        font-weight 200
+        font-size 50px
+        font-family Raleway
+
+
+.prompter-input
+    flex-grow 1
+    width 500px
+    margin 0 auto
+    input
+        position relative
+        width 100%
+        margin 0 auto
+        height 60px
+        border none
+        padding 10px
+        color rgb(104, 170, 224)
+
+.sign-up-keyboard-holder
+    position relative
+    height 350px
+    width 900px
+    margin 0 auto
+
+.keyboard
+    position relative
+    height 100%
+    width 100%
+    margin-left 80px
+
+.keyboard-row
+    display flex
+    flex-direction row
+    justify-content center
+    padding 7px
+
+.key
+    position relative
+    height 70px
+    width 70px
+    background-color key-bg
+    border-radius 90px
+    margin-left 5px
+    margin-right 5px
+    box-shadow 1px 3px 5px 1px key-shadow
+    transform translate(-1px,-1px)
+
+    &:hover
+        box-shadow 1px 2px 4px 1px key-shadow
+        p
+            -webkit-filter brightness(1.7)
+
+    p
+        position relative
+        height 10px
+        width 10px
+        margin 0
+        padding 0
+        top 50%
+        left 50%
+        line-height 10px
+        transform translate(-50%,-50%)
+        font-family Raleway
+        font-size 30px
+        font-weight 500
+        color key-fg
+        text-shadow 2px 2px 3px rgba(66, 66, 66, 0.20)
+
+
+.key:after
+    position absolute
+    content ""
+    opacity 0
+    top 50%
+    left 50%
+    height 1px
+    width 1px
+    transform translate(-50%,-50%)
+    border-radius 90px
+    background-color key-accent
+
+.pressed
+    box-shadow 1px 1px 0px 0px key-shadow
+    transform translate(0px,0px)
+
+    p
+        -webkit-filter brightness(1.5)
+
+.pressed:after
+    animation key-pulse 0.3s 
+    animation-iteration-count 1
+    animation-timing-function linear
+
+.key.mod-space
+    width 500px
+
+@-webkit-keyframes key-intro
+    0%{
+        transform scale(0.2,0.2)
+        background-color white
+
+    }
+    60%{
+        transform scale(1.1,1.1)
+
+    }
+    100%{
+        transform scale(1,1)
+        background-color key-bg
+    }
+
+.invis
+    opacity 0
+
+.key-intro
+    animation key-intro 0.4s
+    animation-iteration-count 1
+
+.sign-up-monitor-holder
+    position absolute
+    bottom 0px
+    left 0px
+    width 100%
+    height 120px
+    display flex
+    flex-direction column
+    z-index 3
+
+.monitor.mod-sign-up
+    justify-content flex-end
+    padding-left 160px
+
+.sign-up-fields-holder
+    position absolute
+    z-index 1
+
+.sign-up-fields
+    position relative
+    width 310px
+    padding-top 30px
+    padding-left 20px
+    z-index 1
+
+@-webkit-keyframes card-enter{
+    0% {
+       transform translate(4px,3px) scale(0.8,0.8)
+       box-shadow 0px 0px 0px 0px rgba(20,20,20,0.0)  
+       opacity 0
+    }	
+    25% {
+       transform translate(0px,0) scale(1,1)
+       box-shadow 3px 5px 10px 0px rgba(20,20,20,0.2)  
+       opacity 0.7
+    }
+    50% {
+       transform translate(-2px,-2px) scale(1.05,1.05)
+       box-shadow 4px 7px 15px 0px rgba(20,20,20,0.3)  
+       opacity 1
+    }
+    100% {
+        transform translate(0px,0px) scale(1,1)
+        box-shadow 2px 3px 7px 0px rgba(20,20,20,0.2)  
+        opacity 1
+    }
+}
+.sign-up-fields-item
+    position relative
+    width 100%
+    height 110px
+    margin 10px auto
+    // opacity 1
+    background-color white
+    font-family Raleway
+    font-weight 200
+    // box-shadow 3px 5px 10px 0px rgba(20,20,20,0.2)
+    transform scale(1,1)
+    transition-property transform,box-shadow
+    transition-duration 0.2s
+    transition-timing ease-out
+    box-shadow 2px 3px 7px 0px rgba(20,20,20,0.2)  
+    opacity 1
+
+
+    &:hover,&:active,&:focus
+        transform scale(1.07,1.07)
+    
+
+.sign-up-fields-item.ng-enter
+    animation card-enter 0.4s
+    animation-iteration-count 1
+    animation-timing-function linear
+
+.base-fields-item-label
+    position relatative
+    width 100%
+    font-size 24px
+    font-weight 200
+    color #66665e
+    padding-top 15px
+    padding-left 15px
+    
+.base-fields-item-input
+    position relative
+    width 100%
+
+    input
+        position relative
+        width 100%
+        margin 0 auto
+        font-weight 500
+        height 60px
+        border none
+        padding 10px
+        padding-left 25px
+        background-color transparent
+        color rgb(104, 170, 224)
+        outline none
+        border none
+        border-width 0px
+        transition-property border
+        transition-duration 0.2s
+
+        &:focus
+            border-bottom 3px solid rgb(104, 170, 224)
+    
+.monitor.mod-sign-up
+    .monitor-ring:after
+        background-color bg-blue
+    .monitor-ring-center
+        background-color bg-blue
+
+.monitor.mod-sign-up.isTransitioning
+    .monitor-ring-center
+        z-index 5
+        -webkit-clip-path: circle(1000px at 50% 50%);

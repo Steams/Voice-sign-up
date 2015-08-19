@@ -1,23 +1,18 @@
 angular.module 'voice-signup'
     .config ($stateProvider) ->
         $stateProvider
-            .state('base',{
+            .state('welcome',{
             url:''
-            templateUrl: '/app/modules/app-globals/partials/base.html'
-            controller:"global_Ctrl"
+            templateUrl: '/app/modules/welcome/welcome.html'
+            controller:"welcome_Ctrl"
             })
-            .state('base.welcome',{
-                url:'/welcome'
-                templateUrl: '/app/modules/welcome/welcome.html'
-                controller:"welcome_Ctrl"
-            })
-            .state('base.sign-up',{
+            .state('sign-up',{
                 url:'/sign-up'
-                templateUrl: '/app/modules/sign-up/partials/sign-up.html'
+                templateUrl: '/app/modules/sign-up/sign-up.html'
                 controller:"sign-up_Ctrl"
             })
-            .state('base.thanks',{
+            .state('thanks',{
                 url:'/thanks'
-                templateUrl: '/app/modules/thansk/partials/thanks.html'
+                templateUrl: '/app/modules/thanks/thanks.html'
                 controller:"thanks_Ctrl"
             })

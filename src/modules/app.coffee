@@ -3,16 +3,10 @@
 app = angular.module('voice-signup',
     ['ngRoute',
     'ui.router',
-    'react'
+    'ngAnimate'
     ])
 
-
-#require('../lib/annyang.min.js')
 require('./module_app-globals')
 require('./module_sign-up')
 require('./module_welcome')
-require('./testComp')
-require('./testCtrl')
-
-
-
+require('./module_thanks')

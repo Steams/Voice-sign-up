@@ -1,5 +1,4 @@
 @require "normalize"
-
 //bg-blue = #00BCD4 
 //bg-blue = #03A9F4
 //bg-blue = #2196F3
@@ -10,309 +9,23 @@
 //bg = #3F51B5 
 //red-bg = #E54047 
 //red-bg = #F44336 
-red-bg =#D6253F 
-bg =#53BAE6 
-bg-blue = #FCFFFF
-fg-default = #212121 
-key-shadow = rgba(66, 66, 66, 0.50) 
-key-bg = #F3F2DD
-//key-accent = #3F51B5
-key-accent = #FFF
-//key-accent = #D461A1
-//key-fg = #D461A1 
-//key-fg = #4FB23F 
-key-fg = #66665E
 //key-fg = #EBEFF2 
-orbit-color = #D461A1
 //orange-gradient =  -webkit-linear-gradient(-45deg,  rgba(241,85,54,1) 0%, rgba(202,28,51,1) 70%);
 //blue-gradient =  -webkit-linear-gradient(-45deg,  rgba(241,85,54,1) 0%, rgba(202,28,51,1) 100%);
 //blue-gradient = -webkit-linear-gradient(-45deg, rgba(112, 191, 245,1) 0%,rgba(39, 160, 243, 1) 100%);
 //my-orange = #FF5722 
 //my-orange = rgba(255, 87, 34, 0.6) 
 //my-orange = #ff5b42 
-my-orange = #EF473A 
-my-burgundy =#CB1D34 
 //my-burgundy = rgba(128, 0, 32, 0.6) 
+
+red-bg =#D6253F 
+my-burgundy =#CB1D34 
+my-orange = #EF473A 
 my-gradient = -webkit-linear-gradient(-65deg, my-orange 0%, my-orange 40%, my-burgundy 80%)
-
-
-*
-    box-sizing border-box
-#holder,body,html
-    position relative
-    height 100%
-    width 100%
-    color fg-default
-    font-family "Open Sans"
-
-
-.base
-    position relative
-    height 100%
-    width 100%
-    display flex
-    flex-direction row
-
-.base-welcome
-    position relative
-    height 100%
-    width 100%
-    background url('./res/red-noise.png'), my-gradient
-
-.base-sign-up
-    position relative
-    height 100%
-    width 100%
-    background-color bg
-
-//.base:before
-    //position absolute
-    //top 0
-    //left 0
-    //height 100%
-    //width 100%
-    //content ""
-    //background orange-gradient
-    //z-index 0
-
-.base-section
-    position relative
-    height 100%
-    flex-grow 1
-    border 1px solid rgba(255, 255, 255, 0.27) 
-
-
-.base-section.mod-right
-    display none
-.base-section.mod-left
-    display none
-    padding-top 60px
-    max-width 400px
-
-.base-fields
-    position relative
-    height 500px
-    border 1px solid rgba(255, 255, 255, 0.27) 
-    padding 0px 20px
-
-.base-fields-item
-    position relative
-    width 100%
-    height 90px
-    margin 10px auto
-    border 1px solid rgba(255, 255, 255, 0.27) 
-
-.base-fields-item-label
-    position relatative
-    width 100%
-    font-size 24px
-    font-weight 500
-    color rgb(115, 115, 115) 
-
-.base-fields-item-input
-    position relative
-    width 100%
-
-    input
-        position relative
-        width 100%
-        margin 0 auto
-        height 60px
-        border none
-        padding 10px
-        background-color transparent
-        border-bottom 2px solid green
-
-.base-section.mod-middle
-    flex-grow 3
-
-.base-prompt
-    position relative
-    height 300px
-    width 600px
-    display flex
-    flex-direction column
-    margin 0 auto
-    //border 1px solid rgba(255, 255, 255, 0.27) 
-
-.base-prompt-label
-    position relative
-    height 40%
-    width 300px
-    margin 0 auto
-    //border 1px solid rgba(255, 255, 255, 0.27) 
-
-    p
-        position relative
-        top 50%
-        transform translate(0,-50%)
-        margin 0 auto
-        text-align center
-        padding-bottom 40px
-        //border-bottom 1px solid rgba(255, 255, 255, 0.27) 
-        font-size 50px
-        font-family Raleway
-        color #263238 
-
-
-
-.base-prompt-input
-    flex-grow 1
-    width 500px
-    margin 0 auto
-    
-    input
-        position relative
-        width 100%
-        margin 0 auto
-        height 60px
-        border none
-        padding 10px
-
-
-.base-keyboard
-    position relative
-    height 350px
-    width 900px
-    margin 0 auto
-    //border 1px solid rgba(255, 255, 255, 0.27) 
-
-.base-keyboard-row
-    display flex
-    margin-top 10px
-    flex-direction row
-    justify-content center
-    flex-wrap wrap
-
-.key
-    position relative
-    height 70px
-    width 70px
-    background-color key-bg
-    border-radius 90px
-    margin-left 5px
-    margin-right 5px
-    box-shadow 1px 3px 5px 1px key-shadow
-    transform translate(-1px,-1px)
-
-    &:hover
-        box-shadow 1px 1px 0px 0px key-shadow
-        transform translate(0px,0px)
-
-    p
-        position relative
-        height 10px
-        width 10px
-        margin 0
-        padding 0
-        top 50%
-        left 50%
-        line-height 10px
-        transform translate(-50%,-50%)
-        font-family Raleway
-        font-size 30px
-        font-weight 500
-        color key-fg
-        text-shadow 2px 2px 3px rgba(66, 66, 66, 0.20)
-
-
-@-webkit-keyframes key-pulse{
-
-    0% {
-        opacity 0
-        height 0px
-        width 0px
-    }
-
-    20% {
-        opacity 0.7
-        height 50%
-        width 50%
-    }
-
-    100% {
-        opacity 0.3
-        height 120%
-        width 120%
-    }
-
-}
-
-.key:after
-    position absolute
-    content ""
-    opacity 0
-    top 50%
-    left 50%
-    height 1px
-    width 1px
-    transform translate(-50%,-50%)
-    border-radius 90px
-    background-color key-accent
-
-
-
-.pressed
-    box-shadow 1px 1px 0px 0px key-shadow
-    transform translate(0px,0px)
-
-    p
-        -webkit-filter brightness(1.5)
-
-.pressed:after
-    animation key-pulse 0.3s 
-    animation-iteration-count 1
-    animation-timing-function linear
-
-
-.key.mod-space
-    width 500px
-
-.base-monitor
-    position relative
-    height 60px
-    width 60px
-    margin 0 auto
-    margin-top 20px
-
-.base-monitor-ring
-    position relative
-    height 60px
-    width 60psx
-    border 2px solid #FF7043 
-    border-radius 50px
-
-.base-monitor-ring-center
-    position relative
-    height 15px
-    width 15px
-    top 50%
-    left 50%
-    transform translate(-50%,-50%)
-    border-radius 20px
-    background-color #F44336 
-
-@-webkit-keyframes pulse
-    from { 
-        transform scale(1,1)
-        opacity 1
-    }
-    to   { 
-        transform scale(4.25,4.25)
-        opacity 0
-    }
-
-.base-monitor-ring-center:after
-    position absolute
-    opacity 1
-    content ""
-    top 0px
-    left 0px
-    height 100%
-    width 100%
-    background-color #F44336
-    border-radius 40px
-    animation pulse 0.7s linear infinite
+//my-gradient =-webkit-linear-gradient(-65deg, #B8352B 0%, #CB382C 40%, #A1182A 80%) 
+bg-blue =#53BAE6 
+dark-fg = rgba(30,30,30,0.4) 
+orbit-color = #D461A1
 
 @-webkit-keyframes orbit {
     from {
@@ -323,7 +36,81 @@ my-gradient = -webkit-linear-gradient(-65deg, my-orange 0%, my-orange 40%, my-bu
     }
 }
 
-.base-monitor-ring-orbit
+*
+    box-sizing border-box
+
+#holder,body,html
+    position relative
+    height 100%
+    width 100%
+    color fg-default
+    font-family "Open Sans"
+
+.base
+    position relative
+    height 100%
+    width 100%
+
+.base.mod-welcome
+    position relative
+    height 100%
+    width 100%
+    background url('./res/red-noise.png'), my-gradient
+
+.base.mod-sign-up
+    position relative
+    height 100%
+    width 100%
+    background-color bg-blue
+
+.base.mod-thanks
+    position relative
+    height 100%
+    width 100%
+    background-color #5CC85B
+
+.monitor
+    position relative
+    display flex
+    flex-direction column
+    align-items center
+    height 100%
+    min-width 200px
+    margin 0 auto
+
+.monitor-ring
+    position relative
+    height 60px
+    width 60px
+    border 2px solid #FF7043 
+    border-radius 50px
+
+.monitor-ring:after
+    position absolute
+    opacity 1
+    content ""
+    top 50%
+    left 50%
+    height 15px
+    width 15px
+    transform translate(-50%,-50%)
+    border-radius 40px
+    animation pulse 0.7s linear infinite
+
+.monitor-ring-center
+    position relative
+    z-index 1
+    height 1500px
+    width 1500px
+    top 50%
+    left 50%
+    transform translate(-50%,-50%)
+    border-radius 20px
+    background-color #F44336 
+    -webkit-clip-path: circle(8px at 50% 50%);
+    transition all 1s cubic-bezier(0.19, 1, 0.22, 1)
+
+.monitor-ring-orbit
     position absolute
     top 25px
     left 25px
@@ -334,14 +121,16 @@ my-gradient = -webkit-linear-gradient(-65deg, my-orange 0%, my-orange 40%, my-bu
     animation orbit 2s linear infinite
     background-color orbit-color
 
-.base-caption
+.monitor-caption
     position relative
-    height 25px
-    width 200px
     margin 0 auto
-
+    flex-shrink 1
+    z-index -1
     p
         width 100%
         text-align center
         font-size 25px
-        color  #424242
+        color  dark-fg
+        font-weight bold
+        padding 0
+        margin 0
