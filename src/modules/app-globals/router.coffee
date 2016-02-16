@@ -2,7 +2,7 @@ angular.module 'voice-signup'
     .config ($stateProvider) ->
         $stateProvider
             .state('welcome',{
-            url:''
+            url:'/welcome'
             templateUrl: '/app/modules/welcome/welcome.html'
             controller:"welcome_Ctrl"
             })
@@ -10,6 +10,8 @@ angular.module 'voice-signup'
                 url:'/sign-up'
                 templateUrl: '/app/modules/sign-up/sign-up.html'
                 controller:"sign-up_Ctrl"
+                cache: false
+                reload:true
             })
             .state('thanks',{
                 url:'/thanks'

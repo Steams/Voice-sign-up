@@ -102,7 +102,7 @@ dark-fg = rgba(30,30,30,0.4)
     left 0
     height 100%
     width 100%
-    content "{ COMPUTING SOCIETY }"
+    content attr(data-text)
     background -webkit-linear-gradient(0deg, dark-gold 10%, my-gold 40%, my-gold 50%, dark-gold 90%);
     -webkit-text-fill-color transparent
     -webkit-background-clip text
@@ -209,7 +209,7 @@ dark-fg = rgba(30,30,30,0.4)
     position absolute
     left 50px
     bottom 0
-    height 130%
+    height 120%
     width 350px
     background-color my-white
     color dark-fg
@@ -352,9 +352,13 @@ dark-fg = rgba(30,30,30,0.4)
     left 0%
     // transform translate(-100%,0)
 
-img
+.img
+    height 100%
+    width 100%
     outline none !important
     border none !important
+    background-size 100% 100%
+    background-repeat no-repeat
 
 .monitor.mod-welcome
     .monitor-ring:after
@@ -365,5 +369,5 @@ img
 .monitor.mod-welcome.isTransitioning
     .monitor-ring-center
         z-index 5
-        -webkit-clip-path: circle(1000px at 50% 50%);
+        -webkit-clip-path: circle(1200px at 50% 50%);
 

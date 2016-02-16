@@ -282,7 +282,13 @@
 .monitor.mod-sign-up .monitor-ring-center {
   background-color: #53bae6;
 }
+.monitor.mod-sign-up.sign-up .monitor-ring:after {
+  background-color: #5cc85b;
+}
+.monitor.mod-sign-up.sign-up .monitor-ring-center {
+  background-color: #5cc85b;
+}
 .monitor.mod-sign-up.isTransitioning .monitor-ring-center {
   z-index: 5;
-  -webkit-clip-path: circle(1000px at 50% 50%);
+  -webkit-clip-path: circle(1200px at 50% 50%);
 }

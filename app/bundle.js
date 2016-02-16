@@ -56,15 +56,44 @@
 
 },{}],4:[function(require,module,exports){
 (function() {
+  angular.module('voice-signup').service('SaveMember', [
+    '$http', '$q', function($http, $q) {
+      return function(member) {
+        var defer, model;
+        console.log(member);
+        model = {
+          "first_name": member['First Name'],
+          "last_name": member['Last Name'],
+          "email": member['Email address'],
+          "interests": member['Interests']
+        };
+        console.log(model);
+        defer = $q.defer();
+        $http.post("http://localhost:3000/members", model).success(function(res) {
+          return defer.resolve(res);
+        }).error(function(err, status) {
+          return defer.reject(err);
+        });
+        return defer.promise;
+      };
+    }
+  ]);
+
+}).call(this);
+
+},{}],5:[function(require,module,exports){
+(function() {
   angular.module('voice-signup').config(function($stateProvider) {
     return $stateProvider.state('welcome', {
-      url: '',
+      url: '/welcome',
       templateUrl: '/app/modules/welcome/welcome.html',
       controller: "welcome_Ctrl"
     }).state('sign-up', {
       url: '/sign-up',
       templateUrl: '/app/modules/sign-up/sign-up.html',
-      controller: "sign-up_Ctrl"
+      controller: "sign-up_Ctrl",
+      cache: false,
+      reload: true
     }).state('thanks', {
       url: '/thanks',
       templateUrl: '/app/modules/thanks/thanks.html',
@@ -74,7 +103,7 @@
 
 }).call(this);
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function() {
   'use strict';
   var app;
@@ -91,17 +120,19 @@
 
 }).call(this);
 
-},{"./module_app-globals":6,"./module_sign-up":7,"./module_thanks":8,"./module_welcome":9}],6:[function(require,module,exports){
+},{"./module_app-globals":7,"./module_sign-up":8,"./module_thanks":9,"./module_welcome":10}],7:[function(require,module,exports){
 (function() {
   require('./app-globals/router');
 
   require('./app-globals/global_Ctrl');
 
+  require('./app-globals/member_service');
+
   require('./app-globals/factories/fields_factory');
 
 }).call(this);
 
-},{"./app-globals/factories/fields_factory":2,"./app-globals/global_Ctrl":3,"./app-globals/router":4}],7:[function(require,module,exports){
+},{"./app-globals/factories/fields_factory":2,"./app-globals/global_Ctrl":3,"./app-globals/member_service":4,"./app-globals/router":5}],8:[function(require,module,exports){
 (function() {
   require("./sign-up/sign-up_Ctrl");
 
@@ -109,13 +140,13 @@
 
 }).call(this);
 
-},{"./sign-up/keyboard_factory":10,"./sign-up/sign-up_Ctrl":11}],8:[function(require,module,exports){
+},{"./sign-up/keyboard_factory":11,"./sign-up/sign-up_Ctrl":12}],9:[function(require,module,exports){
 (function() {
   require("./thanks/thanks_Ctrl");
 
 }).call(this);
 
-},{"./thanks/thanks_Ctrl":12}],9:[function(require,module,exports){
+},{"./thanks/thanks_Ctrl":13}],10:[function(require,module,exports){
 (function() {
   require("./welcome/welcome_Ctrl");
 
@@ -123,7 +154,7 @@
 
 }).call(this);
 
-},{"./welcome/decoration_factory":13,"./welcome/welcome_Ctrl":14}],10:[function(require,module,exports){
+},{"./welcome/decoration_factory":14,"./welcome/welcome_Ctrl":15}],11:[function(require,module,exports){
 (function() {
   angular.module('voice-signup').factory('keyboard_factory', [
     function() {
@@ -284,13 +315,15 @@
 
 }).call(this);
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function() {
   require('../../lib/annyang.min.js');
 
   angular.module("voice-signup").controller('sign-up_Ctrl', [
-    '$scope', 'Fields_factory', 'keyboard_factory', function($scope, fields_fact, keyboard_factory) {
-      var animateIn, backspace, commands, init, input, intro, modify, next, press, process, reveal, space, type, unInput, unIntro, unPress, undo;
+    '$scope', '$state', 'Fields_factory', 'keyboard_factory', 'SaveMember', function($scope, $state, fields_fact, keyboard_factory, SaveMember) {
+      var animateIn, backspace, commands, goToThanks, init, input, intro, modify, next, press, process, reveal, space, type, unInput, unIntro, unPress, undo;
+      console.log("Sign up please");
+      $scope.member = {};
       commands = {
         'test': function() {
           return alert("works");
@@ -424,7 +457,9 @@
           name: field,
           value: value
         });
+        $scope.member[field] = value;
         $scope.$apply();
+        console.log($scope.member);
         return 0;
       };
       next = function() {
@@ -433,6 +468,8 @@
         $scope.field = fields_fact.getNext();
         if ($scope.count > 4) {
           $scope.done = true;
+          SaveMember($scope.member);
+          $scope.thanks($scope.member.name);
         }
         return $scope.word = "";
       };
@@ -505,8 +542,17 @@
         return setTimeout(function() {
           var cl;
           cl = document.getElementsByClassName("js-monitor")[0].className;
-          return document.getElementsByClassName("js-monitor")[0].className = cl.replace("isTransitioning", '');
+          document.getElementsByClassName("js-monitor")[0].className = cl.replace("isTransitioning", '');
+          return setTimeout(function() {
+            return document.getElementsByClassName("js-monitor")[0].className += "sign-up";
+          }, 200);
         }, 500);
+      };
+      goToThanks = function() {
+        document.getElementsByClassName("js-monitor")[0].className += " isTransitioning";
+        return setTimeout(function() {
+          return $state.go("thanks");
+        }, 1000);
       };
       init = function() {
         annyang.addCommands(commands);
@@ -534,6 +580,7 @@
       $scope.unIntro = unIntro;
       $scope.animateIn = animateIn;
       $scope.next = next;
+      $scope.thanks = goToThanks;
       init();
       return 0;
     }
@@ -541,13 +588,42 @@
 
 }).call(this);
 
-},{"../../lib/annyang.min.js":1}],12:[function(require,module,exports){
+},{"../../lib/annyang.min.js":1}],13:[function(require,module,exports){
 (function() {
-  angular.module("voice-signup").controller("thanks_Ctrl", ["$scope", "$state", function($scope, $state) {}]);
+  angular.module("voice-signup").controller("thanks_Ctrl", [
+    "$scope", "$state", function($scope, $state) {
+      var goToWelcome, init, reveal;
+      console.log("Thanks");
+      goToWelcome = function() {
+        document.getElementsByClassName("js-monitor")[0].className += " isTransitioning";
+        return setTimeout(function() {
+          console.log("going to welcome");
+          return $state.go("welcome");
+        }, 1000);
+      };
+      reveal = function() {
+        return setTimeout(function() {
+          var cl;
+          cl = document.getElementsByClassName("js-monitor")[0].className;
+          document.getElementsByClassName("js-monitor")[0].className = cl.replace("isTransitioning", '');
+          return setTimeout(function() {
+            return document.getElementsByClassName("js-monitor")[0].className += "thanks";
+          }, 200);
+        }, 500);
+      };
+      init = function() {
+        return reveal();
+      };
+      init();
+      return setTimeout(function() {
+        return goToWelcome();
+      }, 3000);
+    }
+  ]);
 
 }).call(this);
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function() {
   angular.module("voice-signup").factory('decoration_factory', [
     function() {
@@ -560,16 +636,41 @@
 
 }).call(this);
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function() {
   angular.module('voice-signup').controller('welcome_Ctrl', [
     '$scope', '$state', 'decoration_factory', 'Fields_factory', function($scope, $state, decorations, fields_fact) {
-      var commands, current, maxPic, minPic, next, transition;
+      var changeImg, changeNextImg, commands, current, init, maxPic, minPic, next, reveal, transition;
       $scope.decoration = decorations.text;
-      $scope.titles = ["Pelican", "Chatwa", "UWI Maps"];
-      $scope.titleIndex = 0;
-      minPic = 4;
-      maxPic = 13;
+      $scope.images = [
+        {
+          title: 'Pelican',
+          ext: 'png'
+        }, {
+          title: 'Pelican',
+          ext: 'png'
+        }, {
+          title: 'Pelican',
+          ext: 'png'
+        }, {
+          title: 'Pelican',
+          ext: 'png'
+        }, {
+          title: 'Pelican',
+          ext: 'png'
+        }, {
+          title: 'Chatois',
+          ext: 'webp'
+        }, {
+          title: 'Chatois',
+          ext: 'webp'
+        }, {
+          title: 'Chatois',
+          ext: 'webp'
+        }
+      ];
+      minPic = 1;
+      maxPic = 8;
       $scope.picIndex = minPic;
       $scope.nextPicIndex = function() {
         if ($scope.picIndex + 1 < maxPic + 1) {
@@ -582,6 +683,24 @@
         $scope.titleIndex = $scope.titleIndex + 1 < 3 ? $scope.titleIndex + 1 : 0;
         return $scope.picIndex = $scope.picIndex + 1 < maxPic + 1 ? $scope.picIndex + 1 : minPic;
       };
+      changeImg = function(attr) {
+        var list;
+        list = document.querySelectorAll("div[image]");
+        return [].forEach.call(list, (function(el) {
+          var url;
+          url = "./res/Screenshot_" + $scope.picIndex + "." + $scope.images[$scope.picIndex - 1].ext;
+          return el.style.backgroundImage = "url('" + url + "')";
+        }));
+      };
+      changeNextImg = function(attr) {
+        var list;
+        list = document.querySelectorAll("div[imageNext]");
+        return [].forEach.call(list, (function(el) {
+          var url;
+          url = "./res/Screenshot_" + $scope.nextPicIndex() + "." + $scope.images[$scope.nextPicIndex() - 1].ext;
+          return el.style.backgroundImage = "url('" + url + "')";
+        }));
+      };
       current = document.getElementsByClassName("welcome-body-image")[0];
       next = document.getElementsByClassName("welcome-body-image")[1];
       $scope.slide = function() {
@@ -591,13 +710,12 @@
         return setTimeout(function() {
           $scope.nextPic();
           $scope.$apply();
+          changeImg();
           current.className = current.className.replace(" isSliding", "");
-          return next.className = next.className.replace(" isSliding", "");
+          next.className = next.className.replace(" isSliding", "");
+          return changeNextImg();
         }, 300);
       };
-      setInterval(function() {
-        return $scope.slide();
-      }, 3000);
       document.onkeypress = function(evt) {
         var charCode;
         evt = evt || window.event;
@@ -610,15 +728,48 @@
         document.getElementsByClassName("js-monitor")[0].className += " isTransitioning";
         return setTimeout(function() {
           fields_fact.refresh();
-          return $state.go("sign-up");
+          return $state.go("sign-up", null, {
+            reload: true
+          });
         }, 1000);
       };
-      return commands = {
-        "sign me up": transition
+      commands = {
+        "sign me up": function() {
+          return transition();
+        },
+        "test": function() {
+          return alert("working");
+        }
       };
+      reveal = function() {
+        return setTimeout(function() {
+          var cl;
+          cl = document.getElementsByClassName("js-monitor")[0].className;
+          document.getElementsByClassName("js-monitor")[0].className = cl.replace("isTransitioning", '');
+          return setTimeout(function() {
+            return document.getElementsByClassName("js-monitor")[0].className += "welccome";
+          }, 200);
+        }, 500);
+      };
+      init = function() {
+        var x;
+        console.log("initing");
+        reveal();
+        annyang.addCommands(commands);
+        annyang.start();
+        $scope.slide();
+        clearInterval(window.timer);
+        x = 0;
+        return window.timer = setInterval(function() {
+          x++;
+          console.log("interval " + x);
+          return $scope.slide();
+        }, 3000);
+      };
+      return init();
     }
   ]);
 
 }).call(this);
 
-},{}]},{},[5]);
+},{}]},{},[6]);

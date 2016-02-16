@@ -4,6 +4,7 @@ key-bg = #F3F2DD
 key-accent = #FFF
 key-fg = #66665E
 bg-blue =#53BAE6 
+bg-green = #5CC85B
 
 @-webkit-keyframes key-pulse{
 
@@ -297,7 +298,13 @@ bg-blue =#53BAE6
     .monitor-ring-center
         background-color bg-blue
 
+.monitor.mod-sign-up.sign-up
+    .monitor-ring:after
+        background-color bg-green
+    .monitor-ring-center
+        background-color bg-green
+
 .monitor.mod-sign-up.isTransitioning
     .monitor-ring-center
         z-index 5
-        -webkit-clip-path: circle(1000px at 50% 50%);
+        -webkit-clip-path: circle(1200px at 50% 50%);

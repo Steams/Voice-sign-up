@@ -1,3 +1,9 @@
+.base.mod-thanks {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  flex-direction: row;
+}
 .firework {
   position: absolute;
   top: 50%;
@@ -89,4 +95,30 @@
   transform-origin: right top;
   transform: rotate(-45deg);
   background-color: #d33b3b;
+}
+.thanks-monitor-holder {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+}
+.monitor.mod-thanks .monitor-ring:after {
+  background-color: #5cc85b;
+}
+.monitor.mod-thanks .monitor-ring-center {
+  background-color: #5cc85b;
+}
+.monitor.mod-thanks.thanks .monitor-ring:after {
+  background-color: #53bae6;
+}
+.monitor.mod-thanks.thanks .monitor-ring-center {
+  background-color: #53bae6;
+}
+.monitor.mod-thanks.isTransitioning .monitor-ring-center {
+  z-index: 5;
+  -webkit-clip-path: circle(1200px at 50% 50%);
 }

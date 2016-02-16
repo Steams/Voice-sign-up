@@ -3,10 +3,10 @@
         .welcome-hero-header WELCOME
         .welcome-hero-body
             .welcome-hero-body-pre ~ TO ~
-            .welcome-hero-body-title { COMPUTING SOCIETY }
+            .welcome-hero-body-title(data-text="{ COMPUTING SOCIETY }") { COMPUTING SOCIETY }
 
     .welcome-monitor-holder
-        .monitor.mod-welcome.js-monitor
+        .monitor.mod-welcome.js-monitor.isTransitioning
             .monitor-ring
                 .monitor-ring-center
                 .monitor-ring-orbit
@@ -18,14 +18,12 @@
             .welcome-body-prompt-words " Sign me up "
             .welcome-body-prompt-decoration {{decoration}}
             .welcome-body-recent-ribbon
-            //-.weclome-body-prompt-bar.mod-2
         .welcome-body-recent
-            .welcome-body-recent-header(data-heading="Pelican" data-title="{{titles[titleIndex]}}")
+            .welcome-body-recent-header(data-heading="Pelican" data-title="{{images[picIndex-1].title}}")
             .welcome-body-slideshow
               ul.welcome-body-image-holder
                 li.welcome-body-image.current
-                  img(src="./res/Screenshot_{{picIndex}}.png")
+                  .img(image='')
                 li.welcome-body-image.next
-                  img(src="./res/Screenshot_{{nextPicIndex()}}.png")
-
+                  .img(imageNext='')
 

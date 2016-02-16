@@ -2,8 +2,10 @@
   require('../../lib/annyang.min.js');
 
   angular.module("voice-signup").controller('sign-up_Ctrl', [
-    '$scope', 'Fields_factory', 'keyboard_factory', function($scope, fields_fact, keyboard_factory) {
-      var animateIn, backspace, commands, init, input, intro, modify, next, press, process, reveal, space, type, unInput, unIntro, unPress, undo;
+    '$scope', '$state', 'Fields_factory', 'keyboard_factory', 'SaveMember', function($scope, $state, fields_fact, keyboard_factory, SaveMember) {
+      var animateIn, backspace, commands, goToThanks, init, input, intro, modify, next, press, process, reveal, space, type, unInput, unIntro, unPress, undo;
+      console.log("Sign up please");
+      $scope.member = {};
       commands = {
         'test': function() {
           return alert("works");
@@ -137,7 +139,9 @@
           name: field,
           value: value
         });
+        $scope.member[field] = value;
         $scope.$apply();
+        console.log($scope.member);
         return 0;
       };
       next = function() {
@@ -146,6 +150,8 @@
         $scope.field = fields_fact.getNext();
         if ($scope.count > 4) {
           $scope.done = true;
+          SaveMember($scope.member);
+          $scope.thanks($scope.member.name);
         }
         return $scope.word = "";
       };
@@ -218,8 +224,17 @@
         return setTimeout(function() {
           var cl;
           cl = document.getElementsByClassName("js-monitor")[0].className;
-          return document.getElementsByClassName("js-monitor")[0].className = cl.replace("isTransitioning", '');
+          document.getElementsByClassName("js-monitor")[0].className = cl.replace("isTransitioning", '');
+          return setTimeout(function() {
+            return document.getElementsByClassName("js-monitor")[0].className += "sign-up";
+          }, 200);
         }, 500);
+      };
+      goToThanks = function() {
+        document.getElementsByClassName("js-monitor")[0].className += " isTransitioning";
+        return setTimeout(function() {
+          return $state.go("thanks");
+        }, 1000);
       };
       init = function() {
         annyang.addCommands(commands);
@@ -247,6 +262,7 @@
       $scope.unIntro = unIntro;
       $scope.animateIn = animateIn;
       $scope.next = next;
+      $scope.thanks = goToThanks;
       init();
       return 0;
     }

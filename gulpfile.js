@@ -19,7 +19,7 @@ gulp.task('webserver', function() {
     '.'
   ])
     .pipe(server({
-      livereload: true,
+      livereload: false,
       directoryListing: true,
       open: true,
     }));

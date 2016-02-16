@@ -83,7 +83,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  content: "{ COMPUTING SOCIETY }";
+  content: attr(data-text);
   background: -webkit-linear-gradient(0deg, #fc7468 10%, #ffae93 40%, #ffae93 50%, #fc7468 90%);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
@@ -184,7 +184,7 @@
   position: absolute;
   left: 50px;
   bottom: 0;
-  height: 130%;
+  height: 120%;
   width: 350px;
   background-color: #ffffc8;
   color: rgba(30,30,30,0.4);
@@ -324,9 +324,13 @@
 .welcome-body-image.next.isSliding {
   left: 0%;
 }
-img {
+.img {
+  height: 100%;
+  width: 100%;
   outline: none !important;
   border: none !important;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 .monitor.mod-welcome .monitor-ring:after {
   background-color: #53bae6;
@@ -336,5 +340,5 @@ img {
 }
 .monitor.mod-welcome.isTransitioning .monitor-ring-center {
   z-index: 5;
-  -webkit-clip-path: circle(1000px at 50% 50%);
+  -webkit-clip-path: circle(1200px at 50% 50%);
 }
